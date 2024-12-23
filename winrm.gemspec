@@ -38,7 +38,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'logging', ['>= 1.6.1', '< 3.0']
   s.add_runtime_dependency 'nori', '= 2.7.0' # nori 2.7.1 hasw a bug where it throws a NoMethodError for snakecase.
   s.add_runtime_dependency 'rexml', '~> 3.3' # needs to load at least 3.3.6 to get past a CVE
-  s.add_runtime_dependency 'rubygems', '>= 3.6'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake', '>= 10.3', '< 13'
   s.add_development_dependency 'rb-readline'
