@@ -3,7 +3,7 @@ require File.expand_path('lib/winrm/version', __dir__)
 
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
-  s.name = 'winrm'
+  s.name = 'chef-winrm'
   s.version = WinRM::VERSION
   s.date = Date.today.to_s
 
@@ -31,9 +31,9 @@ Gem::Specification.new do |s|
   s.executables = ['rwinrm']
   s.required_ruby_version = '>= 2.5.0'
   s.add_runtime_dependency 'builder', '>= 2.1.2'
+  s.add_runtime_dependency 'chef-gyoku', '>= 1.4.1'
   s.add_runtime_dependency 'erubi', '~> 1.8'
   s.add_runtime_dependency 'gssapi', '~> 1.2'
-  s.add_runtime_dependency 'gyoku', '~> 1.0'
   s.add_runtime_dependency 'httpclient', '~> 2.2', '>= 2.2.0.2'
   s.add_runtime_dependency 'logging', ['>= 1.6.1', '< 3.0']
   s.add_runtime_dependency 'nori', '= 2.7.0' # nori 2.7.1 hasw a bug where it throws a NoMethodError for snakecase.
