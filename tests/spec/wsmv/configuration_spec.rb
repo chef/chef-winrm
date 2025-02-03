@@ -1,4 +1,4 @@
-require 'winrm/wsmv/configuration'
+require 'chef-winrm/wsmv/configuration'
 
 describe WinRM::WSMV::Configuration do
   subject do

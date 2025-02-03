@@ -1,4 +1,4 @@
-require 'winrm/wsmv/wql_query'
+require 'chef-winrm/wsmv/wql_query'
 
 describe WinRM::WSMV::WqlQuery do
   context 'default session options' do

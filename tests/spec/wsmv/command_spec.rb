@@ -1,4 +1,4 @@
-require 'winrm/wsmv/command'
+require 'chef-winrm/wsmv/command'
 
 describe WinRM::WSMV::Command do
   context 'default session options' do

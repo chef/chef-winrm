@@ -1,4 +1,4 @@
-require 'winrm/psrp/message_defragmenter'
+require 'chef-winrm/psrp/message_defragmenter'
 
 describe WinRM::PSRP::MessageDefragmenter do
   context 'a real life fragment' do

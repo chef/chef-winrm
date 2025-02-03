@@ -1,5 +1,5 @@
-require 'winrm/psrp/message_data/base'
-require 'winrm/psrp/message_data/pipeline_state'
+require 'chef-winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/pipeline_state'
 
 describe WinRM::PSRP::MessageData::PipelineState do
   let(:test_data_xml_template) do

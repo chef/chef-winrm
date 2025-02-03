@@ -1,4 +1,4 @@
-require 'winrm/psrp/receive_response_reader'
+require 'chef-winrm/psrp/receive_response_reader'
 
 describe WinRM::PSRP::ReceiveResponseReader do
   let(:shell_id) { 'F4A2622B-B842-4EB8-8A78-0225C8A993DF' }

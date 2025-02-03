@@ -1,4 +1,4 @@
-require 'winrm/psrp/message'
+require 'chef-winrm/psrp/message'
 
 describe WinRM::PSRP::Message do
   context 'all fields provided' do

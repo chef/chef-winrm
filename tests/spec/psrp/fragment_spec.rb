@@ -1,4 +1,4 @@
-require 'winrm/psrp/fragment'
+require 'chef-winrm/psrp/fragment'
 
 describe WinRM::PSRP::Fragment do
   let(:id) { 1 }

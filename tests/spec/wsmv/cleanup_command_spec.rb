@@ -1,4 +1,4 @@
-require 'winrm/wsmv/cleanup_command'
+require 'chef-winrm/wsmv/cleanup_command'
 
 describe WinRM::WSMV::CleanupCommand do
   context 'default session options' do

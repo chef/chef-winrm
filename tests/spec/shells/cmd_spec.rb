@@ -1,4 +1,4 @@
-require 'winrm/shells/cmd'
+require 'chef-winrm/shells/cmd'
 
 describe WinRM::Shells::Cmd do
   let(:retry_limit) { 1 }

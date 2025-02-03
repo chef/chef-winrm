@@ -1,4 +1,4 @@
-require 'winrm/wsmv/close_shell'
+require 'chef-winrm/wsmv/close_shell'
 
 describe WinRM::WSMV::CloseShell do
   context 'default session options' do

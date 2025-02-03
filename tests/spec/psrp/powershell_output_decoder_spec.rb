@@ -1,4 +1,4 @@
-require 'winrm/psrp/powershell_output_decoder'
+require 'chef-winrm/psrp/powershell_output_decoder'
 
 describe WinRM::PSRP::PowershellOutputDecoder do
   let(:message_type) { WinRM::PSRP::Message::MESSAGE_TYPES[:error_record] }

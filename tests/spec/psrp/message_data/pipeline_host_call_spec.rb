@@ -1,5 +1,5 @@
-require 'winrm/psrp/message_data/base'
-require 'winrm/psrp/message_data/pipeline_host_call'
+require 'chef-winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/pipeline_host_call'
 
 describe WinRM::PSRP::MessageData::PipelineHostCall do
   let(:raw_data) do

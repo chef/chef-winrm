@@ -1,5 +1,5 @@
-require 'winrm/psrp/message'
-require 'winrm/psrp/message_data'
+require 'chef-winrm/psrp/message'
+require 'chef-winrm/psrp/message_data'
 
 describe WinRM::PSRP::MessageData do
   describe '#parse' do

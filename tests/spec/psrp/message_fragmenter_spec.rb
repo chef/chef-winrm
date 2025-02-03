@@ -1,5 +1,5 @@
-require 'winrm/psrp/message'
-require 'winrm/psrp/message_fragmenter'
+require 'chef-winrm/psrp/message'
+require 'chef-winrm/psrp/message_fragmenter'
 
 describe WinRM::PSRP::MessageFragmenter do
   let(:message) do

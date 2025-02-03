@@ -1,4 +1,4 @@
-require 'winrm/wsmv/keep_alive'
+require 'chef-winrm/wsmv/keep_alive'
 
 describe WinRM::WSMV::KeepAlive do
   context 'default session options' do

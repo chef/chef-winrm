@@ -1,5 +1,5 @@
-require 'winrm/psrp/message_data/base'
-require 'winrm/psrp/message_data/error_record'
+require 'chef-winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/error_record'
 
 describe WinRM::PSRP::MessageData::ErrorRecord do
   let(:test_data_xml_template) do

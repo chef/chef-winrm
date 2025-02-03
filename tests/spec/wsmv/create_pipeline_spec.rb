@@ -1,4 +1,4 @@
-require 'winrm/wsmv/create_pipeline'
+require 'chef-winrm/wsmv/create_pipeline'
 
 describe WinRM::WSMV::CreatePipeline do
   context 'default session options' do

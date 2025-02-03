@@ -1,5 +1,5 @@
-require 'winrm/psrp/message_data/base'
-require 'winrm/psrp/message_data/runspacepool_state'
+require 'chef-winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/runspacepool_state'
 
 describe WinRM::PSRP::MessageData::RunspacepoolState do
   let(:raw_data) do

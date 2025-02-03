@@ -1,4 +1,4 @@
-require 'winrm/wsmv/send_data'
+require 'chef-winrm/wsmv/send_data'
 
 describe WinRM::WSMV::SendData do
   context 'default session options' do

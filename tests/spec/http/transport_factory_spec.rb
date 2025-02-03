@@ -1,5 +1,5 @@
-require 'winrm/exceptions'
-require 'winrm/http/transport_factory'
+require 'chef-winrm/exceptions'
+require 'chef-winrm/http/transport_factory'
 
 module WinRM
   module HTTP
