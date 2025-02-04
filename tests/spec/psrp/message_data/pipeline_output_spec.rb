@@ -1,5 +1,5 @@
-require 'winrm/psrp/message_data/base'
-require 'winrm/psrp/message_data/pipeline_output'
+require 'chef-winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/pipeline_output'
 
 describe WinRM::PSRP::MessageData::PipelineOutput do
   subject { described_class.new(raw_data) }

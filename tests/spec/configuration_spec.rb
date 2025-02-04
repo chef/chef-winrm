@@ -1,4 +1,4 @@
-require 'winrm/connection_opts'
+require 'chef-winrm/connection_opts'
 
 describe WinRM::ConnectionOpts do
   shared_examples 'invalid options' do |error_type|

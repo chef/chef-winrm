@@ -1,5 +1,5 @@
 require 'rubyntlm'
-require 'winrm/http/transport'
+require 'chef-winrm/http/transport'
 
 describe WinRM::HTTP::HttpNegotiate do
   describe '#init' do

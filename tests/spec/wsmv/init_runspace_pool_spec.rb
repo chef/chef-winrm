@@ -1,4 +1,4 @@
-require 'winrm/wsmv/init_runspace_pool'
+require 'chef-winrm/wsmv/init_runspace_pool'
 
 describe WinRM::WSMV::InitRunspacePool do
   context 'default session options' do

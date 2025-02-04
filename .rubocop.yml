@@ -34,6 +34,9 @@ Metrics/ModuleLength:
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
+Naming/FileName:
+  Enabled: false
+
 Metrics/ClassLength:
   Max: 250
 

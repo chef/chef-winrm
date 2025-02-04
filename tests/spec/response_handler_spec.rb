@@ -1,4 +1,4 @@
-require 'winrm/http/response_handler'
+require 'chef-winrm/http/response_handler'
 
 describe 'response handler', unit: true do
   %w[v1 v2 omi].each do |winrm_version|

@@ -1,4 +1,4 @@
-require 'winrm/shells/power_shell'
+require 'chef-winrm/shells/power_shell'
 
 describe WinRM::Shells::Powershell do
   let(:retry_limit) { 1 }

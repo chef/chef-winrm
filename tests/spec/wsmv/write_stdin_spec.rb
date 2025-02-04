@@ -1,5 +1,5 @@
 require 'base64'
-require 'winrm/wsmv/write_stdin'
+require 'chef-winrm/wsmv/write_stdin'
 
 describe WinRM::WSMV::WriteStdin do
   context 'default session options' do

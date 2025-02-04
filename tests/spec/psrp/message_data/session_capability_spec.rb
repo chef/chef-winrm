@@ -1,5 +1,5 @@
-require 'winrm/psrp/message_data/base'
-require 'winrm/psrp/message_data/session_capability'
+require 'chef-winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/session_capability'
 
 describe WinRM::PSRP::MessageData::SessionCapability do
   let(:protocol_version) { '2.2' }

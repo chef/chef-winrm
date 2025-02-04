@@ -1,4 +1,4 @@
-require 'winrm/wsmv/create_shell'
+require 'chef-winrm/wsmv/create_shell'
 
 describe WinRM::WSMV::CreateShell do
   context 'default session options' do

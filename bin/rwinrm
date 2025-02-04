@@ -20,7 +20,7 @@ $LOAD_PATH.push File.expand_path('../../lib', __FILE__)
 
 require 'readline'
 require 'io/console'
-require 'winrm'
+require 'chef-winrm'
 
 def help_msg
   puts 'Usage: rwinrm user@host'

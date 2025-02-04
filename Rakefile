@@ -10,7 +10,7 @@ Dir.chdir(File.expand_path(__dir__))
 desc 'Open a Pry console for this library'
 task :console do
   require 'pry'
-  require 'winrm'
+  require 'chef-winrm'
   ARGV.clear
   Pry.start
 end

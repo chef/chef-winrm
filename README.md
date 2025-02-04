@@ -21,7 +21,7 @@ WinRM 1.1 is supported, however 2.0 and higher is recommended. [See MSDN](http:/
 
 ## Example
 ```ruby
-require 'winrm'
+require 'chef-winrm'
 opts = { 
   endpoint: 'http://myhost:5985/wsman',
   user: 'administrator',

@@ -1,6 +1,6 @@
-require 'winrm'
-require 'winrm/shells/cmd'
-require 'winrm/shells/power_shell'
+require 'chef-winrm'
+require 'chef-winrm/shells/cmd'
+require 'chef-winrm/shells/power_shell'
 
 describe WinRM::Connection do
   context 'new' do

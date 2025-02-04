@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'winrm'
+require 'chef-winrm'
 require 'json'
 require_relative '../matchers'
 

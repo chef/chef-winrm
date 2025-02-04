@@ -1,4 +1,4 @@
-require 'winrm/psrp/message_data/base'
+require 'chef-winrm/psrp/message_data/base'
 
 describe WinRM::PSRP::MessageData::Base do
   let(:raw_data) { 'raw_data' }

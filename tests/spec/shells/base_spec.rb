@@ -1,4 +1,4 @@
-require 'winrm/shells/base'
+require 'chef-winrm/shells/base'
 
 # Dummy shell class
 class DummyShell < WinRM::Shells::Base

@@ -1,4 +1,4 @@
-require 'winrm/wsmv/command_output_decoder'
+require 'chef-winrm/wsmv/command_output_decoder'
 
 describe WinRM::WSMV::CommandOutputDecoder do
   let(:raw_output_with_bom) do

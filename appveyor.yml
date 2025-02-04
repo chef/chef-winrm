@@ -7,8 +7,8 @@ platform:
 environment:
   winrm_user: test_user
   winrm_password: Pass@word1
-  user_cert: c:\projects\winrm\user.pem
-  user_key: c:\projects\winrm\key.pem
+  user_cert: c:\projects\chef-winrm\user.pem
+  user_key: c:\projects\chef-winrm\key.pem
 
   matrix:
     - ruby_version: "31"

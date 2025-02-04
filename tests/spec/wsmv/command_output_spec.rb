@@ -1,5 +1,5 @@
-require 'winrm/wsmv/command_output'
-require 'winrm/wsmv/header'
+require 'chef-winrm/wsmv/command_output'
+require 'chef-winrm/wsmv/header'
 
 describe WinRM::WSMV::CommandOutput do
   context 'default session options' do
