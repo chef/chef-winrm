@@ -18,23 +18,23 @@ module WinRM
       # error record message type
       class ErrorRecord < Base
         def exception
-          @exception ||= property_hash('Exception')
+          @exception ||= property_hash("Exception")
         end
 
         def fully_qualified_error_id
-          @fully_qualified_error_id ||= string_prop('FullyQualifiedErrorId')
+          @fully_qualified_error_id ||= string_prop("FullyQualifiedErrorId")
         end
 
         def invocation_info
-          @invocation_info ||= property_hash('InvocationInfo')
+          @invocation_info ||= property_hash("InvocationInfo")
         end
 
         def error_category_message
-          @error_category_message ||= string_prop('ErrorCategory_Message')
+          @error_category_message ||= string_prop("ErrorCategory_Message")
         end
 
         def error_details_script_stack_trace
-          @error_details_script_stack_trace ||= string_prop('ErrorDetails_ScriptStackTrace')
+          @error_details_script_stack_trace ||= string_prop("ErrorDetails_ScriptStackTrace")
         end
 
         def doc
@@ -51,16 +51,16 @@ module WinRM
           return {} if prop_nodes.nil?
 
           prop_nodes.elements.each_with_object({}) do |node, props|
-            name = node.attributes['N']
+            name = node.attributes["N"]
             props[underscore(name).to_sym] = node.text if node.text
           end
         end
 
         def underscore(camel)
-          camel.gsub(/::/, '/')
-               .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-               .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-               .tr('-', '_').downcase
+          camel.gsub(/::/, "/")
+            .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+            .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+            .tr("-", "_").downcase
         end
       end
     end

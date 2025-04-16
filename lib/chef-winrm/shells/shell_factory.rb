@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
-require_relative 'cmd'
-require_relative 'power_shell'
+require_relative "base"
+require_relative "cmd"
+require_relative "power_shell"
 
 module WinRM
   module Shells
@@ -39,7 +39,7 @@ module WinRM
         args = [
           @connection_opts,
           @transport,
-          @logger
+          @logger,
         ]
         # winrm-elevated has an initializer with no shell_opts so don't break it
         args << shell_opts unless shell_opts.nil? || shell_opts.empty?
@@ -47,7 +47,7 @@ module WinRM
           WinRM::Shells.const_get(type).new(*args)
         else
           message = "#{type} is not a valid WinRM shell type. " \
-            'Expected either :cmd, :powershell or pluggable shell.'
+            "Expected either :cmd, :powershell or pluggable shell."
           raise WinRM::InvalidShellError, message
         end
       end

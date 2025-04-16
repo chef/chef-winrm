@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'securerandom' unless defined?(SecureRandom)
-require_relative 'base'
-require_relative '../psrp/message_fragmenter'
-require_relative '../psrp/receive_response_reader'
-require_relative '../wsmv/configuration'
-require_relative '../wsmv/create_pipeline'
-require_relative '../wsmv/send_data'
-require_relative '../wsmv/init_runspace_pool'
-require_relative '../wsmv/keep_alive'
+require "securerandom" unless defined?(SecureRandom)
+require_relative "base"
+require_relative "../psrp/message_fragmenter"
+require_relative "../psrp/receive_response_reader"
+require_relative "../wsmv/configuration"
+require_relative "../wsmv/create_pipeline"
+require_relative "../wsmv/send_data"
+require_relative "../wsmv/init_runspace_pool"
+require_relative "../wsmv/keep_alive"
 
 module WinRM
   module Shells
@@ -78,7 +78,7 @@ module WinRM
             # error attempting to query winrm configuration.
             # we will assin a small default and adjust to a protocol
             # appropriate max length when that info is available
-            raise unless e.fault_code == '5'
+            raise unless e.fault_code == "5"
 
             WinRM::PSRP::MessageFragmenter::DEFAULT_BLOB_LENGTH
           rescue WinRMSoapFault
@@ -125,7 +125,7 @@ module WinRM
       end
 
       def out_streams
-        %w[stdout]
+        %w{stdout}
       end
 
       private
@@ -137,8 +137,8 @@ module WinRM
       def empty_pipeline_envelope
         WinRM::WSMV::CreatePipeline.new(
           connection_opts,
-          '00000000-0000-0000-0000-000000000000',
-          '00000000-0000-0000-0000-000000000000'
+          "00000000-0000-0000-0000-000000000000",
+          "00000000-0000-0000-0000-000000000000"
         ).build
       end
 
@@ -148,16 +148,16 @@ module WinRM
           msg = config_msg.build
           resp_doc = transport.send_request(msg)
           REXML::XPath.first(resp_doc, "//*[local-name() = 'MaxEnvelopeSizekb']").text.to_i
-        rescue REXML::ParseException
-          logger.debug("[WinRM] Endpoint doesn't support config request for MaxEnvelopeSizekb")
-          raise
+                                  rescue REXML::ParseException
+                                    logger.debug("[WinRM] Endpoint doesn't support config request for MaxEnvelopeSizekb")
+                                    raise
         end
       end
 
       def open_shell_payload(shell_id)
         [
           WinRM::PSRP::MessageFactory.session_capability_message(shell_id),
-          WinRM::PSRP::MessageFactory.init_runspace_pool_message(shell_id)
+          WinRM::PSRP::MessageFactory.init_runspace_pool_message(shell_id),
         ].map do |message|
           fragmenter.fragment(message).bytes
         end.flatten
@@ -191,7 +191,7 @@ module WinRM
       # which defaults to a 150 MaxEnvelopeSizeKB
       # later versions default to 500
       def default_protocol_envelope_size(protocol_version)
-        protocol_version > '2.1' ? 512000 : 153600
+        protocol_version > "2.1" ? 512000 : 153600
       end
 
       def fragmenter

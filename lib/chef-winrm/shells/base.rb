@@ -12,27 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'retryable'
-require_relative '../http/transport'
-require_relative '../wsmv/cleanup_command'
-require_relative '../wsmv/close_shell'
-require_relative '../wsmv/command'
-require_relative '../wsmv/command_output'
-require_relative '../wsmv/receive_response_reader'
-require_relative '../wsmv/create_shell'
-require_relative '../wsmv/soap'
+require_relative "retryable"
+require_relative "../http/transport"
+require_relative "../wsmv/cleanup_command"
+require_relative "../wsmv/close_shell"
+require_relative "../wsmv/command"
+require_relative "../wsmv/command_output"
+require_relative "../wsmv/receive_response_reader"
+require_relative "../wsmv/create_shell"
+require_relative "../wsmv/soap"
 
 module WinRM
   module Shells
     # Base class for remote shell
     class Base
-      TOO_MANY_COMMANDS = '2150859174'.freeze
-      ERROR_OPERATION_ABORTED = '995'.freeze
-      SHELL_NOT_FOUND = '2150858843'.freeze
+      TOO_MANY_COMMANDS = "2150859174".freeze
+      ERROR_OPERATION_ABORTED = "995".freeze
+      SHELL_NOT_FOUND = "2150858843".freeze
 
       FAULTS_FOR_RESET = [
-        '2150858843', # Shell has been closed
-        '2147943418', # Error reading registry key
+        "2150858843", # Shell has been closed
+        "2147943418", # Error reading registry key
         TOO_MANY_COMMANDS, # Maximum commands per user exceeded
       ].freeze
 
@@ -121,7 +121,7 @@ module WinRM
           shell_id: shell_id,
           command_id: command_id,
           shell_uri: shell_uri,
-          out_streams: out_streams
+          out_streams: out_streams,
         }
         WinRM::WSMV::CommandOutput.new(connection_opts, cmd_out_opts)
       end
@@ -146,12 +146,13 @@ module WinRM
 
       def reset_on_error(error)
         close if error.fault_code == TOO_MANY_COMMANDS
-        logger.debug('[WinRM] opening new shell since the current one was deleted')
+        logger.debug("[WinRM] opening new shell since the current one was deleted")
         @shell_id = nil
       end
 
       def cleanup_command(command_id)
         return unless shell_id
+
         logger.debug("[WinRM] cleaning up command_id: #{command_id} on shell_id #{shell_id}")
         cleanup_msg = WinRM::WSMV::CleanupCommand.new(
           connection_opts,

@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'message_data/base'
-require_relative 'message_data/error_record'
-require_relative 'message_data/pipeline_output'
-require_relative 'message_data/pipeline_host_call'
-require_relative 'message_data/pipeline_state'
-require_relative 'message_data/runspacepool_host_call'
-require_relative 'message_data/runspacepool_state'
-require_relative 'message_data/session_capability'
+require_relative "message_data/base"
+require_relative "message_data/error_record"
+require_relative "message_data/pipeline_output"
+require_relative "message_data/pipeline_host_call"
+require_relative "message_data/pipeline_state"
+require_relative "message_data/runspacepool_host_call"
+require_relative "message_data/runspacepool_state"
+require_relative "message_data/session_capability"
 
 module WinRM
   # PowerShell Remoting Protcol module
@@ -33,7 +33,7 @@ module WinRM
       end
 
       def self.camelize(underscore)
-        underscore.split('_').collect(&:capitalize).join
+        underscore.split("_").collect(&:capitalize).join
       end
     end
   end

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'transport'
+require_relative "transport"
 
 module WinRM
   module HTTP
@@ -54,8 +54,8 @@ module WinRM
 
       def validate_transport!(transport)
         valid = private_methods
-                .select { |m| m.to_s.start_with?('init_') && m.to_s.end_with?('_transport') }
-                .map { |tm| tm.to_s.split('_')[1] }
+          .select { |m| m.to_s.start_with?("init_") && m.to_s.end_with?("_transport") }
+          .map { |tm| tm.to_s.split("_")[1] }
 
         raise WinRM::InvalidTransportError.new(transport, valid) unless valid.include?(transport.to_s)
       end

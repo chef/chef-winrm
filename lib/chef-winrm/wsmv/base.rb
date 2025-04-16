@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'base64'
-require 'builder'
-require 'gyoku'
-require_relative 'soap'
-require_relative 'header'
+require "base64" unless defined?(Base64)
+require "builder"
+require "gyoku"
+require_relative "soap"
+require_relative "header"
 
 module WinRM
   module WSMV
@@ -28,7 +28,7 @@ module WinRM
       # Builds the WSMV message XML payload
       def build
         builder = Builder::XmlMarkup.new
-        builder.instruct!(:xml, encoding: 'UTF-8')
+        builder.instruct!(:xml, encoding: "UTF-8")
         builder.tag! :env, :Envelope, namespaces do |env|
           env.tag!(:env, :Header) do |env_header|
             create_header(env_header)
@@ -50,7 +50,7 @@ module WinRM
       end
 
       def encode_bytes(bytes)
-        Base64.strict_encode64(bytes.pack('C*'))
+        Base64.strict_encode64(bytes.pack("C*"))
       end
     end
   end

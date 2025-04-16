@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'base64'
-require_relative 'base'
+require "base64" unless defined?(Base64)
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -45,10 +45,10 @@ module WinRM
       end
 
       def validate_opts(session_opts, stdin_opts)
-        raise 'session_opts is required' unless session_opts
-        raise 'stdin_opts[:shell_id] is required' unless stdin_opts[:shell_id]
-        raise 'stdin_opts[:command_id] is required' unless stdin_opts[:command_id]
-        raise 'stdin_opts[:stdin] is required' unless stdin_opts[:stdin]
+        raise "session_opts is required" unless session_opts
+        raise "stdin_opts[:shell_id] is required" unless stdin_opts[:shell_id]
+        raise "stdin_opts[:command_id] is required" unless stdin_opts[:command_id]
+        raise "stdin_opts[:stdin] is required" unless stdin_opts[:stdin]
       end
 
       def stdin_headers
@@ -61,12 +61,12 @@ module WinRM
       def action_send
         {
           "#{NS_ADDRESSING}:Action" =>
-          'http://schemas.microsoft.com/wbem/wsman/1/windows/shell/Send',
+          "http://schemas.microsoft.com/wbem/wsman/1/windows/shell/Send",
           :attributes! => {
             "#{NS_ADDRESSING}:Action" => {
-              'mustUnderstand' => true
-            }
-          }
+              "mustUnderstand" => true,
+            },
+          },
         }
       end
 
@@ -74,11 +74,11 @@ module WinRM
         {
           "#{NS_WIN_SHELL}:Send" => {
             "#{NS_WIN_SHELL}:Stream" => {
-              '@Name' => 'stdin',
-              '@CommandId' => @command_id,
-              :content! => Base64.encode64(@stdin)
-            }
-          }
+              "@Name" => "stdin",
+              "@CommandId" => @command_id,
+              :content! => Base64.encode64(@stdin),
+            },
+          },
         }
       end
     end

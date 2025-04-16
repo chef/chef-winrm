@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'fragment'
+require_relative "fragment"
 
 module WinRM
   # PowerShell Remoting Protcol module
@@ -33,28 +33,28 @@ module WinRM
         if fragment.end_fragment
           blob = []
           @messages.delete(fragment.object_id).each { |frag| blob += frag.blob }
-          return message_from(blob.pack('C*'))
+          message_from(blob.pack("C*"))
         end
         # rubocop:enable Style/GuardClause
       end
 
       def fragment_from(byte_string)
         Fragment.new(
-          byte_string[0..7].reverse.unpack('Q')[0],
+          byte_string[0..7].reverse.unpack("Q")[0],
           byte_string[21..-1].bytes,
-          byte_string[8..15].reverse.unpack('Q')[0],
-          byte_string[16].unpack('C')[0][0] == 1,
-          byte_string[16].unpack('C')[0][1] == 1
+          byte_string[8..15].reverse.unpack("Q")[0],
+          byte_string[16].unpack("C")[0][0] == 1,
+          byte_string[16].unpack("C")[0][1] == 1
         )
       end
 
       def message_from(byte_string)
         Message.new(
-          '00000000-0000-0000-0000-000000000000',
-          byte_string[4..7].unpack('V')[0],
+          "00000000-0000-0000-0000-000000000000",
+          byte_string[4..7].unpack("V")[0],
           byte_string[40..-1],
-          '00000000-0000-0000-0000-000000000000',
-          byte_string[0..3].unpack('V')[0]
+          "00000000-0000-0000-0000-000000000000",
+          byte_string[0..3].unpack("V")[0]
         )
       end
     end

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'rexml/document' unless defined?(REXML::Document)
+require "rexml/document" unless defined?(REXML::Document)
 
 module WinRM
   module PSRP
@@ -20,19 +20,19 @@ module WinRM
       # Handles decoding a raw powershell output response
       class PipelineOutput < Base
         def output
-          extract_out_string(remove_bom(raw.force_encoding('utf-8')))
+          extract_out_string(remove_bom(raw.force_encoding("utf-8")))
         end
 
         private
 
         def extract_out_string(text)
           doc = REXML::Document.new(text)
-          doc.root.get_elements('//S').map do |node|
-            text = ''
+          doc.root.get_elements("//S").map do |node|
+            text = ""
             if node.text
               text << node.text.gsub(/(_x\h\h\h\h_)+/) do |match|
                 match.scan(/_x(\h\h\h\h)_/).flatten.map(&:hex)
-                     .pack('S*').force_encoding('utf-16le').encode('utf-8')
+                  .pack("S*").force_encoding("utf-16le").encode("utf-8")
               end.chomp
             end
             text << "\r\n"
@@ -40,7 +40,7 @@ module WinRM
         end
 
         def remove_bom(text)
-          text.sub("\xEF\xBB\xBF", '')
+          text.sub("\xEF\xBB\xBF", "")
         end
       end
     end

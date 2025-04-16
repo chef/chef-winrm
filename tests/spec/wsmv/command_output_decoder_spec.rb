@@ -1,19 +1,19 @@
-require 'chef-winrm/wsmv/command_output_decoder'
+require "chef-winrm/wsmv/command_output_decoder"
 
 describe WinRM::WSMV::CommandOutputDecoder do
   let(:raw_output_with_bom) do
-    '77u/' \
-    'ICAgQ29ubmVjdGlvbi1zcGVjaWZpYyBETlMgU3VmZml4ICAuIDogDQogICBMaW5rLWxvY2FsIElQdjYgQWRkcmVzcyA' \
-    'uIC4gLiAuIC4gOiBmZTgwOjo5MTFkOjE2OTQ6NTcwNDo1YjI5JTEyDQogICBJUHY0IEFkZHJlc3MuIC4gLiAuIC4gLi' \
-    'AuIC4gLiAuIC4gOiAxMC4wLjIuMTUNCiAgIFN1Ym5ldCBNYXNrIC4gLiAuIC4gLiAuIC4gLiAuIC4gLiA6IDI1NS4yN' \
-    'TUuMjU1LjANCiAgIERlZmF1bHQgR2F0ZXdheSAuIC4gLiAuIC4gLiAuIC4gLiA6IDEwLjAuMi4yDQoNClR1bm5lbCBh' \
-    'ZGFwdGVyIGlzYXRhcC57RjBENTY2RDgtNzlCMS00QUYwLUJENUQtMkM5RkVEOEI3MTE3fToNCg0KICAgTWVkaWEgU3R' \
-    'hdGUgLiAuIC4gLiAuIC4gLiAuIC4gLiAuIDogTWVkaWEgZGlzY29ubmVjdGVkDQogICBDb25uZWN0aW9uLXNwZWNpZm' \
-    'ljIEROUyBTdWZmaXggIC4gOiANCg0KVHVubmVsIGFkYXB0ZXIgVGVyZWRvIFR1bm5lbGluZyBQc2V1ZG8tSW50ZXJmY' \
-    'WNlOg0KDQogICBDb25uZWN0aW9uLXNwZWNpZmljIEROUyBTdWZmaXggIC4gOiANCiAgIElQdjYgQWRkcmVzcy4gLiAu' \
-    'IC4gLiAuIC4gLiAuIC4gLiA6IDIwMDE6MDo5ZDM4OjZhYmQ6NGJiOjI4YjU6ZjVmZjpmZGYwDQogICBMaW5rLWxvY2F' \
-    'sIElQdjYgQWRkcmVzcyAuIC4gLiAuIC4gOiBmZTgwOjo0YmI6MjhiNTpmNWZmOmZkZjAlMTQNCiAgIERlZmF1bHQgR2' \
-    'F0ZXdheSAuIC4gLiAuIC4gLiAuIC4gLiA6IDo6DQo='
+    "77u/" \
+    "ICAgQ29ubmVjdGlvbi1zcGVjaWZpYyBETlMgU3VmZml4ICAuIDogDQogICBMaW5rLWxvY2FsIElQdjYgQWRkcmVzcyA" \
+    "uIC4gLiAuIC4gOiBmZTgwOjo5MTFkOjE2OTQ6NTcwNDo1YjI5JTEyDQogICBJUHY0IEFkZHJlc3MuIC4gLiAuIC4gLi" \
+    "AuIC4gLiAuIC4gOiAxMC4wLjIuMTUNCiAgIFN1Ym5ldCBNYXNrIC4gLiAuIC4gLiAuIC4gLiAuIC4gLiA6IDI1NS4yN" \
+    "TUuMjU1LjANCiAgIERlZmF1bHQgR2F0ZXdheSAuIC4gLiAuIC4gLiAuIC4gLiA6IDEwLjAuMi4yDQoNClR1bm5lbCBh" \
+    "ZGFwdGVyIGlzYXRhcC57RjBENTY2RDgtNzlCMS00QUYwLUJENUQtMkM5RkVEOEI3MTE3fToNCg0KICAgTWVkaWEgU3R" \
+    "hdGUgLiAuIC4gLiAuIC4gLiAuIC4gLiAuIDogTWVkaWEgZGlzY29ubmVjdGVkDQogICBDb25uZWN0aW9uLXNwZWNpZm" \
+    "ljIEROUyBTdWZmaXggIC4gOiANCg0KVHVubmVsIGFkYXB0ZXIgVGVyZWRvIFR1bm5lbGluZyBQc2V1ZG8tSW50ZXJmY" \
+    "WNlOg0KDQogICBDb25uZWN0aW9uLXNwZWNpZmljIEROUyBTdWZmaXggIC4gOiANCiAgIElQdjYgQWRkcmVzcy4gLiAu" \
+    "IC4gLiAuIC4gLiAuIC4gLiA6IDIwMDE6MDo5ZDM4OjZhYmQ6NGJiOjI4YjU6ZjVmZjpmZGYwDQogICBMaW5rLWxvY2F" \
+    "sIElQdjYgQWRkcmVzcyAuIC4gLiAuIC4gOiBmZTgwOjo0YmI6MjhiNTpmNWZmOmZkZjAlMTQNCiAgIERlZmF1bHQgR2" \
+    "F0ZXdheSAuIC4gLiAuIC4gLiAuIC4gLiA6IDo6DQo="
   end
   let(:expected) do
     "   Connection-specific DNS Suffix  . : \r\n   Link-local IPv6 Address . . . . . : fe80::911" \
@@ -27,8 +27,8 @@ describe WinRM::WSMV::CommandOutputDecoder do
     " . . . . . : ::\r\n"
   end
   subject { described_class.new }
-  context 'valid UTF-8 raw output' do
-    it 'decodes' do
+  context "valid UTF-8 raw output" do
+    it "decodes" do
       expect(subject.decode(raw_output_with_bom)).to eq(expected)
     end
   end

@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
     # WSMV message to execute a command inside a remote shell
     class CleanupCommand < Base
       def initialize(session_opts, opts)
-        raise 'opts[:shell_id] is required' unless opts[:shell_id]
-        raise 'opts[:command_id] is required' unless opts[:command_id]
+        raise "opts[:shell_id] is required" unless opts[:shell_id]
+        raise "opts[:command_id] is required" unless opts[:command_id]
 
         @session_opts = session_opts
         @shell_id = opts[:shell_id]
@@ -35,7 +35,7 @@ module WinRM
       end
 
       def create_body(body)
-        body.tag!("#{NS_WIN_SHELL}:Signal", 'CommandId' => @command_id) do |cl|
+        body.tag!("#{NS_WIN_SHELL}:Signal", "CommandId" => @command_id) do |cl|
           cl << Gyoku.xml(cleanup_body)
         end
       end
@@ -52,7 +52,7 @@ module WinRM
       def cleanup_body
         {
           "#{NS_WIN_SHELL}:Code" =>
-            'http://schemas.microsoft.com/wbem/wsman/1/windows/shell/signal/terminate'
+            "http://schemas.microsoft.com/wbem/wsman/1/windows/shell/signal/terminate",
         }
       end
     end

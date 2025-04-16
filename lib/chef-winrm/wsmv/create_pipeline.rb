@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
-require_relative '../psrp/message_factory'
+require_relative "base"
+require_relative "../psrp/message_factory"
 
 module WinRM
   module WSMV
@@ -35,7 +35,7 @@ module WinRM
       end
 
       def create_body(body)
-        body.tag!("#{NS_WIN_SHELL}:CommandLine", 'CommandId' => command_id) do |cl|
+        body.tag!("#{NS_WIN_SHELL}:CommandLine", "CommandId" => command_id) do |cl|
           cl << Gyoku.xml(command_body)
         end
       end
@@ -44,8 +44,8 @@ module WinRM
 
       def command_body
         {
-          "#{NS_WIN_SHELL}:Command" => 'Invoke-Expression',
-          "#{NS_WIN_SHELL}:Arguments" => arguments
+          "#{NS_WIN_SHELL}:Command" => "Invoke-Expression",
+          "#{NS_WIN_SHELL}:Arguments" => arguments,
         }
       end
 

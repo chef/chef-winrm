@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'httpclient'
-require_relative 'response_handler'
+require "httpclient"
+require_relative "response_handler"
 
 module WinRM
   module HTTP
@@ -39,11 +39,11 @@ module WinRM
       def send_request(message)
         ssl_peer_fingerprint_verification!
         log_soap_message(message)
-        hdr = { 'Content-Type' => 'application/soap+xml;charset=UTF-8',
-                'Content-Length' => message.bytesize }
+        hdr = { "Content-Type" => "application/soap+xml;charset=UTF-8",
+                "Content-Length" => message.bytesize }
         # We need to add this header if using Client Certificate authentication
         unless @httpcli.ssl_config.client_cert.nil?
-          hdr['Authorization'] = 'http://schemas.dmtf.org/wbem/wsman/1/wsman/secprofile/https/mutual'
+          hdr["Authorization"] = "http://schemas.dmtf.org/wbem/wsman/1/wsman/secprofile/https/mutual"
         end
 
         resp = @httpcli.post(@endpoint, message, hdr)
@@ -55,13 +55,13 @@ module WinRM
 
       # We'll need this to force basic authentication if desired
       def basic_auth_only!
-        auths = @httpcli.www_auth.instance_variable_get('@authenticator')
+        auths = @httpcli.www_auth.instance_variable_get("@authenticator")
         auths.delete_if { |i| i.scheme !~ /basic/i }
       end
 
       # Disable SSPI Auth
       def no_sspi_auth!
-        auths = @httpcli.www_auth.instance_variable_get('@authenticator')
+        auths = @httpcli.www_auth.instance_variable_get("@authenticator")
         auths.delete_if { |i| i.is_a? HTTPClient::SSPINegotiateAuth }
       end
 
@@ -109,14 +109,14 @@ module WinRM
 
       protected
 
-      def body(message, length, type = 'application/HTTP-SPNEGO-session-encrypted')
+      def body(message, length, type = "application/HTTP-SPNEGO-session-encrypted")
         [
-          '--Encrypted Boundary',
+          "--Encrypted Boundary",
           "Content-Type: #{type}",
           "OriginalContent: type=application/soap+xml;charset=UTF-8;Length=#{length}",
-          '--Encrypted Boundary',
-          'Content-Type: application/octet-stream',
-          "#{message}--Encrypted Boundary--"
+          "--Encrypted Boundary",
+          "Content-Type: application/octet-stream",
+          "#{message}--Encrypted Boundary--",
         ].join("\r\n").concat("\r\n")
       end
 
@@ -148,10 +148,10 @@ module WinRM
     class HttpNegotiate < HttpTransport
       def initialize(endpoint, user, pass, opts)
         super(endpoint, opts)
-        require 'rubyntlm'
+        require "rubyntlm"
         no_sspi_auth!
 
-        user_parts = user.split('\\')
+        user_parts = user.split("\\")
         if user_parts.length > 1
           opts[:domain] = user_parts[0]
           user = user_parts[1]
@@ -171,8 +171,8 @@ module WinRM
         log_soap_message(message)
 
         hdr = {
-          'Content-Type' => 'multipart/encrypted;'\
-            'protocol="application/HTTP-SPNEGO-session-encrypted";boundary="Encrypted Boundary"'
+          "Content-Type" => "multipart/encrypted;"\
+            'protocol="application/HTTP-SPNEGO-session-encrypted";boundary="Encrypted Boundary"',
         }
 
         resp = @httpcli.post(@endpoint, body(seal(message), message.bytesize), hdr)
@@ -199,29 +199,29 @@ module WinRM
 
       def winrm_decrypt(resp)
         # OMI server doesn't always respond to encrypted messages with encrypted responses over SSL
-        return resp.body if resp.header['Content-Type'].first =~ %r{\Aapplication\/soap\+xml}i
-        return '' if resp.body.empty?
+        return resp.body if resp.header["Content-Type"].first =~ %r{\Aapplication\/soap\+xml}i
+        return "" if resp.body.empty?
 
-        str = resp.body.force_encoding('BINARY')
+        str = resp.body.force_encoding("BINARY")
         str.sub!(%r{^.*Content-Type: application\/octet-stream\r\n(.*)--Encrypted.*$}m, '\1')
 
         signature = str[4..19]
         message = @ntlmcli.session.unseal_message str[20..-1]
         return message if @ntlmcli.session.verify_signature(signature, message)
 
-        raise WinRMHTTPTransportError, 'Could not decrypt NTLM message.'
+        raise WinRMHTTPTransportError, "Could not decrypt NTLM message."
       end
 
       def issue_challenge_response(negotiate)
         auth_header = {
-          'Authorization' => "Negotiate #{negotiate.encode64}",
-          'Content-Type' => 'application/soap+xml;charset=UTF-8'
+          "Authorization" => "Negotiate #{negotiate.encode64}",
+          "Content-Type" => "application/soap+xml;charset=UTF-8",
         }
 
         # OMI Server on Linux requires an empty payload with the new auth header to proceed
         # because the config check for max payload size will otherwise break the auth handshake
         # given the OMI server does not support that check
-        @httpcli.post(@endpoint, '', auth_header)
+        @httpcli.post(@endpoint, "", auth_header)
 
         # return an empty hash of headers for subsequent requests to use
         {}
@@ -231,13 +231,13 @@ module WinRM
         @logger.debug "Initializing Negotiate for #{@endpoint}"
         auth1 = @ntlmcli.init_context
         hdr = {
-          'Authorization' => "Negotiate #{auth1.encode64}",
-          'Content-Type' => 'application/soap+xml;charset=UTF-8'
+          "Authorization" => "Negotiate #{auth1.encode64}",
+          "Content-Type" => "application/soap+xml;charset=UTF-8",
         }
-        @logger.debug 'Sending HTTP POST for Negotiate Authentication'
-        r = @httpcli.post(@endpoint, '', hdr)
+        @logger.debug "Sending HTTP POST for Negotiate Authentication"
+        r = @httpcli.post(@endpoint, "", hdr)
         verify_ssl_fingerprint(r.peer_cert)
-        auth_header = r.header['WWW-Authenticate'].pop
+        auth_header = r.header["WWW-Authenticate"].pop
         unless auth_header
           msg = "Unable to parse authorization header. Headers: #{r.headers}\r\nBody: #{r.body}"
           raise WinRMHTTPTransportError.new(msg, r.status_code)
@@ -251,7 +251,7 @@ module WinRM
         if response.peer_cert.nil?
           nil
         else
-          cert = if RUBY_PLATFORM == 'java'
+          cert = if RUBY_PLATFORM == "java"
                    OpenSSL::X509::Certificate.new(response.peer_cert.cert.getEncoded)
                  else
                    response.peer_cert
@@ -279,7 +279,7 @@ module WinRM
       def initialize(endpoint, client_cert, client_key, key_pass, opts)
         super(endpoint, opts)
         @httpcli.ssl_config.set_client_cert_file(client_cert, client_key, key_pass)
-        @httpcli.www_auth.instance_variable_set('@authenticator', [])
+        @httpcli.www_auth.instance_variable_set("@authenticator", [])
         no_ssl_peer_verification! if opts[:no_ssl_peer_verification]
         @ssl_peer_fingerprint = opts[:ssl_peer_fingerprint]
         @httpcli.ssl_config.set_trust_ca(opts[:ca_trust_path]) if opts[:ca_trust_path]
@@ -293,13 +293,13 @@ module WinRM
       # @param [String] realm the Kerberos realm we are authenticating to
       # @param [String<optional>] service the service name, default is HTTP
       def initialize(endpoint, realm, opts, service = nil)
-        require 'gssapi'
-        require 'gssapi/extensions'
+        require "gssapi"
+        require "gssapi/extensions"
 
         super(endpoint, opts)
         # Remove the GSSAPI auth from HTTPClient because we are doing our own thing
         no_sspi_auth!
-        service ||= 'HTTP'
+        service ||= "HTTP"
         @service = "#{service}/#{@endpoint.host}@#{realm}"
         no_ssl_peer_verification! if opts[:no_ssl_peer_verification]
         init_krb
@@ -314,7 +314,7 @@ module WinRM
         resp = send_kerberos_request(message)
 
         if resp.status == 401
-          @logger.debug 'Got 401 - reinitializing Kerberos and retrying one more time'
+          @logger.debug "Got 401 - reinitializing Kerberos and retrying one more time"
           init_krb
           resp = send_kerberos_request(message)
         end
@@ -336,14 +336,14 @@ module WinRM
         pad_len, emsg = winrm_encrypt(message)
         req_length = original_length + pad_len
         hdr = {
-          'Connection' => 'Keep-Alive',
-          'Content-Type' => 'multipart/encrypted;' \
-            'protocol="application/HTTP-Kerberos-session-encrypted";boundary="Encrypted Boundary"'
+          "Connection" => "Keep-Alive",
+          "Content-Type" => "multipart/encrypted;" \
+            'protocol="application/HTTP-Kerberos-session-encrypted";boundary="Encrypted Boundary"',
         }
 
         resp = @httpcli.post(
           @endpoint,
-          body(emsg, req_length, 'application/HTTP-Kerberos-session-encrypted'),
+          body(emsg, req_length, "application/HTTP-Kerberos-session-encrypted"),
           hdr
         )
         log_soap_message(resp.http_body.content)
@@ -357,13 +357,13 @@ module WinRM
         auth = Base64.strict_encode64 token
 
         hdr = {
-          'Authorization' => "Kerberos #{auth}",
-          'Connection' => 'Keep-Alive',
-          'Content-Type' => 'application/soap+xml;charset=UTF-8'
+          "Authorization" => "Kerberos #{auth}",
+          "Connection" => "Keep-Alive",
+          "Content-Type" => "application/soap+xml;charset=UTF-8",
         }
-        @logger.debug 'Sending HTTP POST for Kerberos Authentication'
-        r = @httpcli.post(@endpoint, '', hdr)
-        itok = r.header['WWW-Authenticate'].pop
+        @logger.debug "Sending HTTP POST for Kerberos Authentication"
+        r = @httpcli.post(@endpoint, "", hdr)
+        itok = r.header["WWW-Authenticate"].pop
         itok = itok.split.last
         itok = Base64.strict_decode64(itok)
         @gsscli.init_context(itok)
@@ -407,7 +407,7 @@ module WinRM
           iov_cnt
         )
 
-        token = [iov0[:buffer].length].pack('L')
+        token = [iov0[:buffer].length].pack("L")
         token += iov0[:buffer].value
         token += iov1[:buffer].value
         pad_len = iov2[:buffer].length
@@ -435,10 +435,10 @@ module WinRM
         )
         iov2[:type] = GSSAPI::LibGSSAPI::GSS_IOV_BUFFER_TYPE_DATA
 
-        str.force_encoding('BINARY')
+        str.force_encoding("BINARY")
         str.sub!(%r{^.*Content-Type: application\/octet-stream\r\n(.*)--Encrypted.*$}m, '\1')
 
-        len = str.unpack('L').first
+        len = str.unpack("L").first
         iov_data = str.unpack("La#{len}a*")
         iov0[:buffer].value = iov_data[1]
         iov1[:buffer].value = iov_data[2]

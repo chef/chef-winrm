@@ -1,5 +1,5 @@
-require 'chef-winrm/psrp/message_data/base'
-require 'chef-winrm/psrp/message_data/runspacepool_state'
+require "chef-winrm/psrp/message_data/base"
+require "chef-winrm/psrp/message_data/runspacepool_state"
 
 describe WinRM::PSRP::MessageData::RunspacepoolState do
   let(:raw_data) do
@@ -8,7 +8,7 @@ describe WinRM::PSRP::MessageData::RunspacepoolState do
 
   subject { described_class.new(raw_data) }
 
-  it 'parses runspace state' do
+  it "parses runspace state" do
     expect(subject.runspace_state).to eq(WinRM::PSRP::MessageData::RunspacepoolState::OPENED)
   end
 end

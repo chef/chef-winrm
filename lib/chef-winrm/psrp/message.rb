@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'uuid'
-require_relative 'message_data'
+require_relative "uuid"
+require_relative "message_data"
 
 module WinRM
   # PowerShell Remoting Protcol module
@@ -62,7 +62,7 @@ module WinRM
         progress_record: 0x00041010,
         information_record: 0x00041011,
         pipeline_host_call: 0x00041100,
-        pipeline_host_response: 0x00041101
+        pipeline_host_response: 0x00041101,
       }.freeze
 
       # Creates a new PSRP message instance
@@ -79,7 +79,7 @@ module WinRM
         pipeline_id = nil,
         destination = SERVER_DESTINATION
       )
-        raise 'invalid message type' unless MESSAGE_TYPES.value?(type)
+        raise "invalid message type" unless MESSAGE_TYPES.value?(type)
 
         @data = data
         @destination = destination
@@ -100,7 +100,7 @@ module WinRM
           uuid_to_windows_guid_bytes(runspace_pool_id),
           uuid_to_windows_guid_bytes(pipeline_id),
           byte_order_mark,
-          data_bytes
+          data_bytes,
         ].flatten
       end
 
@@ -117,11 +117,11 @@ module WinRM
       end
 
       def data_bytes
-        @data_bytes ||= data.force_encoding('utf-8').bytes
+        @data_bytes ||= data.force_encoding("utf-8").bytes
       end
 
       def int16le(int16)
-        [int16].pack('N').unpack('C4').reverse
+        [int16].pack("N").unpack("C4").reverse
       end
     end
   end

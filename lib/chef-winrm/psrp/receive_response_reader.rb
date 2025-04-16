@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'nori'
-require_relative 'powershell_output_decoder'
-require_relative 'message_defragmenter'
+require "nori"
+require_relative "powershell_output_decoder"
+require_relative "message_defragmenter"
 
 module WinRM
   module PSRP
@@ -77,7 +77,7 @@ module WinRM
         when WinRM::PSRP::Message::MESSAGE_TYPES[:error_record]
           type = :stderr
         when WinRM::PSRP::Message::MESSAGE_TYPES[:pipeline_host_call]
-          type = :stderr if message.data.include?('WriteError')
+          type = :stderr if message.data.include?("WriteError")
         when WinRM::PSRP::Message::MESSAGE_TYPES[:pipeline_state]
           type = :stderr if message.parsed_data.pipeline_state == WinRM::PSRP::MessageData::PipelineState::FAILED
         end
@@ -88,7 +88,7 @@ module WinRM
         parsed = message.parsed_data
         return nil unless parsed.is_a?(MessageData::PipelineHostCall)
 
-        parsed.method_parameters[:i32].to_i if parsed.method_identifier == 'SetShouldExit'
+        parsed.method_parameters[:i32].to_i if parsed.method_identifier == "SetShouldExit"
       end
     end
   end

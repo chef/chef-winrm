@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -38,7 +38,7 @@ module WinRM
       end
 
       def create_body(body)
-        body.tag!("#{NS_WIN_SHELL}:CommandLine", 'CommandId' => @command_id) do |cl|
+        body.tag!("#{NS_WIN_SHELL}:CommandLine", "CommandId" => @command_id) do |cl|
           cl << Gyoku.xml(command_body)
         end
       end
@@ -51,14 +51,14 @@ module WinRM
         @command = cmd_opts[:command]
         @arguments = cmd_opts[:arguments] || []
         @shell_uri = cmd_opts[:shell_uri] || RESOURCE_URI_CMD
-        @consolemode = cmd_opts.key?(:console_mode_stdin) ? cmd_opts[:console_mode_stdin] : 'TRUE'
-        @skipcmd = cmd_opts.key?(:skip_cmd_shell) ? cmd_opts[:skip_cmd_shell] : 'FALSE'
+        @consolemode = cmd_opts.key?(:console_mode_stdin) ? cmd_opts[:console_mode_stdin] : "TRUE"
+        @skipcmd = cmd_opts.key?(:skip_cmd_shell) ? cmd_opts[:skip_cmd_shell] : "FALSE"
       end
 
       def validate_opts(session_opts, cmd_opts)
-        raise 'session_opts is required' unless session_opts
-        raise 'cmd_opts[:shell_id] is required' unless cmd_opts[:shell_id]
-        raise 'cmd_opts[:command] is required' unless cmd_opts[:command]
+        raise "session_opts is required" unless session_opts
+        raise "cmd_opts[:shell_id] is required" unless cmd_opts[:shell_id]
+        raise "cmd_opts[:command] is required" unless cmd_opts[:command]
       end
 
       def issue69_unescape_single_quotes(xml)
@@ -89,10 +89,10 @@ module WinRM
           "#{NS_WSMAN_DMTF}:OptionSet" => {
             "#{NS_WSMAN_DMTF}:Option" => [@consolemode, @skipcmd], :attributes! => {
               "#{NS_WSMAN_DMTF}:Option" => {
-                'Name' => %w[WINRS_CONSOLEMODE_STDIN WINRS_SKIP_CMD_SHELL]
-              }
+                "Name" => %w{WINRS_CONSOLEMODE_STDIN WINRS_SKIP_CMD_SHELL},
+              },
             }
-          }
+          },
         }
       end
     end

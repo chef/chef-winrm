@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -34,7 +34,7 @@ module WinRM
 
       def create_body(body)
         # OMI server requires a Name for the Shell
-        body.tag!("#{NS_WIN_SHELL}:Shell", 'ShellId' => shell_id, 'Name' => 'Runspace') do |s|
+        body.tag!("#{NS_WIN_SHELL}:Shell", "ShellId" => shell_id, "Name" => "Runspace") do |s|
           s << Gyoku.xml(shell_body)
         end
       end
@@ -43,14 +43,14 @@ module WinRM
 
       def shell_body
         body = {
-          "#{NS_WIN_SHELL}:InputStreams" => 'stdin pr',
-          "#{NS_WIN_SHELL}:OutputStreams" => 'stdout'
+          "#{NS_WIN_SHELL}:InputStreams" => "stdin pr",
+          "#{NS_WIN_SHELL}:OutputStreams" => "stdout",
         }
-        body['creationXml'] = encode_bytes(@payload)
+        body["creationXml"] = encode_bytes(@payload)
         body[:attributes!] = {
-          'creationXml' => {
-            'xmlns' => 'http://schemas.microsoft.com/powershell'
-          }
+          "creationXml" => {
+            "xmlns" => "http://schemas.microsoft.com/powershell",
+          },
         }
         body
       end
@@ -64,12 +64,12 @@ module WinRM
 
       def action_create
         {
-          "#{NS_ADDRESSING}:Action" => 'http://schemas.xmlsoap.org/ws/2004/09/transfer/Create',
+          "#{NS_ADDRESSING}:Action" => "http://schemas.xmlsoap.org/ws/2004/09/transfer/Create",
           :attributes! => {
             "#{NS_ADDRESSING}:Action" => {
-              'mustUnderstand' => true
-            }
-          }
+              "mustUnderstand" => true,
+            },
+          },
         }
       end
 
@@ -79,16 +79,16 @@ module WinRM
             "#{NS_WSMAN_DMTF}:Option" => 2.3,
             :attributes! => {
               "#{NS_WSMAN_DMTF}:Option" => {
-                'Name' => 'protocolversion',
-                'MustComply' => 'true'
-              }
-            }
+                "Name" => "protocolversion",
+                "MustComply" => "true",
+              },
+            },
           },
           :attributes! => {
             "#{NS_WSMAN_DMTF}:OptionSet" => {
-              'env:mustUnderstand' => 'true'
-            }
-          }
+              "env:mustUnderstand" => "true",
+            },
+          },
         }
       end
     end

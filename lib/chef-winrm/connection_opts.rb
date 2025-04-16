@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'securerandom'
+require "securerandom" unless defined?(SecureRandom)
 
 module WinRM
   # WinRM connection options, provides defaults and validation.
@@ -20,10 +20,10 @@ module WinRM
     DEFAULT_OPERATION_TIMEOUT = 60
     DEFAULT_RECEIVE_TIMEOUT = DEFAULT_OPERATION_TIMEOUT + 10
     DEFAULT_MAX_ENV_SIZE = 153600
-    DEFAULT_LOCALE = 'en-US'.freeze
+    DEFAULT_LOCALE = "en-US".freeze
     DEFAULT_RETRY_DELAY = 10
     DEFAULT_RETRY_LIMIT = 3
-    DEFAULT_USER_AGENT = 'Ruby WinRM Client'.freeze
+    DEFAULT_USER_AGENT = "Ruby WinRM Client".freeze
 
     class << self
       def create_with_defaults(overrides)
@@ -65,13 +65,13 @@ module WinRM
     private
 
     def validate_required_fields
-      raise 'endpoint is a required option' unless self[:endpoint]
+      raise "endpoint is a required option" unless self[:endpoint]
 
       if self[:client_cert]
-        raise 'path to client key is required' unless self[:client_key]
+        raise "path to client key is required" unless self[:client_key]
       else
-        raise 'user is a required option' unless self[:user]
-        raise 'password is a required option' unless self[:password]
+        raise "user is a required option" unless self[:user]
+        raise "password is a required option" unless self[:password]
       end
     end
 

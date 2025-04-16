@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -38,7 +38,7 @@ module WinRM
       private
 
       def keep_alive_body
-        { "#{NS_WIN_SHELL}:DesiredStream" => 'stdout' }
+        { "#{NS_WIN_SHELL}:DesiredStream" => "stdout" }
       end
 
       def keep_alive_headers
@@ -52,13 +52,13 @@ module WinRM
       def header_opts
         {
           "#{NS_WSMAN_DMTF}:OptionSet" => {
-            "#{NS_WSMAN_DMTF}:Option" => 'TRUE',
+            "#{NS_WSMAN_DMTF}:Option" => "TRUE",
             :attributes! => {
               "#{NS_WSMAN_DMTF}:Option" => {
-                'Name' => 'WSMAN_CMDSHELL_OPTION_KEEPALIVE'
-              }
-            }
-          }
+                "Name" => "WSMAN_CMDSHELL_OPTION_KEEPALIVE",
+              },
+            },
+          },
         }
       end
     end

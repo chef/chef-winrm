@@ -12,21 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
     # WSMV message to get output from a remote shell
     class CommandOutput < Base
       def initialize(session_opts, command_out_opts)
-        raise 'command_out_opts[:shell_id] is required' unless command_out_opts[:shell_id]
-        raise 'command_out_opts[:command_id] is required' unless command_out_opts[:command_id]
+        raise "command_out_opts[:shell_id] is required" unless command_out_opts[:shell_id]
+        raise "command_out_opts[:command_id] is required" unless command_out_opts[:command_id]
 
         @session_opts = session_opts
         @shell_id = command_out_opts[:shell_id]
         @command_id = command_out_opts[:command_id]
         @shell_uri = command_out_opts[:shell_uri] || RESOURCE_URI_CMD
-        @out_streams = command_out_opts[:out_streams] || %w[stdout stderr]
+        @out_streams = command_out_opts[:out_streams] || %w{stdout stderr}
       end
 
       protected
@@ -52,21 +52,21 @@ module WinRM
       def header_opts
         {
           "#{NS_WSMAN_DMTF}:OptionSet" => {
-            "#{NS_WSMAN_DMTF}:Option" => 'TRUE', :attributes! => {
+            "#{NS_WSMAN_DMTF}:Option" => "TRUE", :attributes! => {
               "#{NS_WSMAN_DMTF}:Option" => {
-                'Name' => 'WSMAN_CMDSHELL_OPTION_KEEPALIVE'
-              }
+                "Name" => "WSMAN_CMDSHELL_OPTION_KEEPALIVE",
+              },
             }
-          }
+          },
         }
       end
 
       def output_body
         {
-          "#{NS_WIN_SHELL}:DesiredStream" => @out_streams.join(' '), :attributes! => {
+          "#{NS_WIN_SHELL}:DesiredStream" => @out_streams.join(" "), :attributes! => {
             "#{NS_WIN_SHELL}:DesiredStream" => {
-              'CommandId' => @command_id
-            }
+              "CommandId" => @command_id,
+            },
           }
         }
       end
