@@ -26,7 +26,6 @@ module WinRM
         @max_blob_length = max_blob_length || DEFAULT_BLOB_LENGTH
       end
 
-      attr_reader :object_id
       attr_accessor :max_blob_length
 
       def fragment(message)
@@ -53,6 +52,10 @@ module WinRM
 
         fragment
       end
+
+      private
+
+      attr_reader :object_id
     end
   end
 end
