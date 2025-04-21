@@ -1,7 +1,7 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
-describe 'issue 59' do
-  describe 'long running script without output' do
+describe "issue 59" do
+  describe "long running script without output" do
     let(:logged_output) { StringIO.new }
     let(:logger)        { Logging.logger(logged_output) }
 
@@ -13,7 +13,7 @@ describe 'issue 59' do
       @powershell = conn.shell(:powershell)
     end
 
-    it 'should not error' do
+    it "should not error" do
       out = @powershell.run('$ProgressPreference="SilentlyContinue";sleep 3; Write-Host "Hello"')
 
       expect(out).to have_exit_code 0

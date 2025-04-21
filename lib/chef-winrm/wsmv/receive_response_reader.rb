@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'soap'
-require_relative 'header'
-require_relative 'command_output_decoder'
-require_relative '../output'
+require_relative "soap"
+require_relative "header"
+require_relative "command_output_decoder"
+require_relative "../output"
 
 module WinRM
   module WSMV
@@ -57,9 +57,9 @@ module WinRM
       def read_response(wsmv_message, wait_for_done_state = false)
         resp_doc = nil
         until command_done?(resp_doc, wait_for_done_state)
-          logger.debug('[WinRM] Waiting for output...')
+          logger.debug("[WinRM] Waiting for output...")
           resp_doc = send_get_output_message(wsmv_message.build)
-          logger.debug('[WinRM] Processing output')
+          logger.debug("[WinRM] Processing output")
           read_streams(resp_doc) do |stream|
             yield stream, resp_doc
           end
@@ -97,9 +97,9 @@ module WinRM
         # 2150858793. When the client receives this fault, it SHOULD issue
         # another Receive request.
         # http://msdn.microsoft.com/en-us/library/cc251676.aspx
-        raise unless e.fault_code == '2150858793'
+        raise unless e.fault_code == "2150858793"
 
-        logger.debug('[WinRM] retrying receive request after timeout')
+        logger.debug("[WinRM] retrying receive request after timeout")
         retry
       end
 
@@ -120,7 +120,7 @@ module WinRM
         REXML::XPath.match(response_document, path).each do |stream|
           next if stream.text.nil? || stream.text.empty?
 
-          yield type: stream.attributes['Name'].to_sym, text: stream.text
+          yield type: stream.attributes["Name"].to_sym, text: stream.text
         end
       end
     end

@@ -18,15 +18,15 @@ module WinRM
       # session capability message type
       class SessionCapability < Base
         def protocol_version
-          clixml[:version].select { |v| v.attributes['N'] == 'protocolversion' }.first
+          clixml[:version].select { |v| v.attributes["N"] == "protocolversion" }.first
         end
 
         def ps_version
-          clixml[:version].select { |v| v.attributes['N'] == 'PSVersion' }.first
+          clixml[:version].select { |v| v.attributes["N"] == "PSVersion" }.first
         end
 
         def serialization_version
-          clixml[:version].select { |v| v.attributes['N'] == 'SerializationVersion' }.first
+          clixml[:version].select { |v| v.attributes["N"] == "SerializationVersion" }.first
         end
       end
     end

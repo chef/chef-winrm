@@ -43,7 +43,7 @@ module WinRM
           int64be(fragment_id),
           end_start_fragment,
           int16be(blob.length),
-          blob
+          blob,
         ].flatten
       end
 
@@ -57,11 +57,11 @@ module WinRM
       end
 
       def int64be(int64)
-        [int64 >> 32, int64 & 0x00000000ffffffff].pack('N2').unpack('C8')
+        [int64 >> 32, int64 & 0x00000000ffffffff].pack("N2").unpack("C8")
       end
 
       def int16be(int16)
-        [int16].pack('N').unpack('C4')
+        [int16].pack("N").unpack("C4")
       end
     end
   end

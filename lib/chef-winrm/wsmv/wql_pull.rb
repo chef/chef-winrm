@@ -1,5 +1,5 @@
-require 'nori'
-require_relative 'base'
+require "nori"
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -45,8 +45,8 @@ module WinRM
         {
           "#{NS_ENUM}:EnumerationContext" => @enumeration_context,
           "#{NS_WSMAN_DMTF}:OptimizeEnumeration" => nil,
-          "#{NS_ENUM}:MaxElements" => '32000',
-          "#{NS_WSMAN_MSFT}:SessionId" => "uuid:#{@session_opts[:session_id]}"
+          "#{NS_ENUM}:MaxElements" => "32000",
+          "#{NS_WSMAN_MSFT}:SessionId" => "uuid:#{@session_opts[:session_id]}",
         }
       end
     end

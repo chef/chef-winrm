@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
     # WSMV message to close a remote shell
     class CloseShell < Base
       def initialize(session_opts, shell_opts)
-        raise 'shell_opts[:shell_id] is required' unless shell_opts[:shell_id]
+        raise "shell_opts[:shell_id] is required" unless shell_opts[:shell_id]
 
         @session_opts = session_opts
         @shell_id = shell_opts[:shell_id]

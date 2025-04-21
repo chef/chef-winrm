@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'nori'
+require "nori"
 
 module WinRM
   # PowerShell Remoting Protcol module

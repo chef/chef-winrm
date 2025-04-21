@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -36,7 +36,7 @@ module WinRM
 
       def configuration_headers
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell('http://schemas.microsoft.com/wbem/wsman/1/config'),
+                      resource_uri_shell("http://schemas.microsoft.com/wbem/wsman/1/config"),
                       action_get)
       end
     end

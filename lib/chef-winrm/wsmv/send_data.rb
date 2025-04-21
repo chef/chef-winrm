@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -46,10 +46,10 @@ module WinRM
           "#{NS_WIN_SHELL}:Stream" => encode_bytes(fragment.bytes),
           :attributes! => {
             "#{NS_WIN_SHELL}:Stream" => {
-              'Name' => 'stdin',
-              'CommandId' => command_id
-            }
-          }
+              "Name" => "stdin",
+              "CommandId" => command_id,
+            },
+          },
         }
       end
 

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'rexml/document' unless defined?(REXML::Document)
-require_relative '../wsmv/soap'
+require "rexml/document" unless defined?(REXML::Document)
+require_relative "../wsmv/soap"
 
 module WinRM
   # Handles the raw WinRM HTTP response. Returns the body as an XML doc
@@ -70,7 +70,7 @@ module WinRM
         soap_errors,
         "//*[local-name() = 'WSManFault']"
       )
-      raise WinRMWSManFault.new(fault.to_s, fault.attributes['Code']) unless fault.nil?
+      raise WinRMWSManFault.new(fault.to_s, fault.attributes["Code"]) unless fault.nil?
     end
 
     def raise_if_wmi_error

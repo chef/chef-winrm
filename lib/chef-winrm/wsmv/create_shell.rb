@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
-require_relative 'iso8601_duration'
+require_relative "base"
+require_relative "iso8601_duration"
 
 module WinRM
   module WSMV
@@ -29,10 +29,10 @@ module WinRM
       def initialize(session_opts, shell_opts = {})
         @session_opts = session_opts
         @shell_uri = opt_or_default(shell_opts, :shell_uri, RESOURCE_URI_CMD)
-        @i_stream = opt_or_default(shell_opts, :i_stream, 'stdin')
-        @o_stream = opt_or_default(shell_opts, :o_stream, 'stdout stderr')
+        @i_stream = opt_or_default(shell_opts, :i_stream, "stdin")
+        @o_stream = opt_or_default(shell_opts, :o_stream, "stdout stderr")
         @codepage = opt_or_default(shell_opts, :codepage, UTF8_CODE_PAGE)
-        @noprofile = opt_or_default(shell_opts, :noprofile, 'FALSE')
+        @noprofile = opt_or_default(shell_opts, :noprofile, "FALSE")
         @working_directory = opt_or_default(shell_opts, :working_directory)
         @idle_timeout = opt_or_default(shell_opts, :idle_timeout)
         @env_vars = opt_or_default(shell_opts, :env_vars)
@@ -57,7 +57,7 @@ module WinRM
       def shell_body
         body = {
           "#{NS_WIN_SHELL}:InputStreams" => @i_stream,
-          "#{NS_WIN_SHELL}:OutputStreams" => @o_stream
+          "#{NS_WIN_SHELL}:OutputStreams" => @o_stream,
         }
         body["#{NS_WIN_SHELL}:WorkingDirectory"] = @working_directory if @working_directory
         body["#{NS_WIN_SHELL}:IdleTimeOut"] = format_idle_timeout(@idle_timeout) if @idle_timeout
@@ -75,9 +75,9 @@ module WinRM
           "#{NS_WIN_SHELL}:Variable" => @env_vars.values,
           :attributes! => {
             "#{NS_WIN_SHELL}:Variable" => {
-              'Name' => @env_vars.keys
-            }
-          }
+              "Name" => @env_vars.keys,
+            },
+          },
         }
       end
 
@@ -90,12 +90,12 @@ module WinRM
 
       def action_create
         {
-          "#{NS_ADDRESSING}:Action" => 'http://schemas.xmlsoap.org/ws/2004/09/transfer/Create',
+          "#{NS_ADDRESSING}:Action" => "http://schemas.xmlsoap.org/ws/2004/09/transfer/Create",
           :attributes! => {
             "#{NS_ADDRESSING}:Action" => {
-              'mustUnderstand' => true
-            }
-          }
+              "mustUnderstand" => true,
+            },
+          },
         }
       end
 
@@ -104,10 +104,10 @@ module WinRM
           "#{NS_WSMAN_DMTF}:OptionSet" => {
             "#{NS_WSMAN_DMTF}:Option" => [@noprofile, @codepage], :attributes! => {
               "#{NS_WSMAN_DMTF}:Option" => {
-                'Name' => %w[WINRS_NOPROFILE WINRS_CODEPAGE]
-              }
+                "Name" => %w{WINRS_NOPROFILE WINRS_CODEPAGE},
+              },
             }
-          }
+          },
         }
       end
     end

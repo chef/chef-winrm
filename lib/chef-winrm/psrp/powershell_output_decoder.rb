@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'base64' unless defined?(Base64)
-require_relative 'message'
-require_relative 'message_data/pipeline_state'
+require "base64" unless defined?(Base64)
+require_relative "message"
+require_relative "message_data/pipeline_state"
 
 module WinRM
   module PSRP
@@ -50,42 +50,38 @@ module WinRM
       end
 
       def decode_host_call(message)
-        text = begin
-          case message.parsed_data.method_identifier
-          when /WriteLine/, 'WriteErrorLine'
+        text = case message.parsed_data.method_identifier
+          when /WriteLine/, "WriteErrorLine"
             "#{message.parsed_data.method_parameters[:s]}\r\n"
-          when 'WriteDebugLine'
+          when "WriteDebugLine"
             "Debug: #{message.parsed_data.method_parameters[:s]}\r\n"
-          when 'WriteWarningLine'
+          when "WriteWarningLine"
             "Warning: #{message.parsed_data.method_parameters[:s]}\r\n"
-          when 'WriteVerboseLine'
+          when "WriteVerboseLine"
             "Verbose: #{message.parsed_data.method_parameters[:s]}\r\n"
           when /Write[1-2]/
             message.parsed_data.method_parameters[:s]
-          end
-        end
+               end
 
         hex_decode(text)
       end
 
       def decode_error_record(message)
         parsed = message.parsed_data
-        text = begin
-          if message.type == WinRM::PSRP::Message::MESSAGE_TYPES[:pipeline_state]
-            render_exception_as_error_record(parsed.exception_as_error_record)
-          else
-            case parsed.fully_qualified_error_id
-            when 'Microsoft.PowerShell.Commands.WriteErrorException'
-              render_write_error_exception(parsed)
-            when 'NativeCommandError'
-              render_native_command_error(parsed)
-            when 'NativeCommandErrorMessage'
-              parsed.exception[:message]
-            else
-              render_exception(parsed)
-            end
-          end
-        end
+        text = if message.type == WinRM::PSRP::Message::MESSAGE_TYPES[:pipeline_state]
+                 render_exception_as_error_record(parsed.exception_as_error_record)
+               else
+                 case parsed.fully_qualified_error_id
+                 when "Microsoft.PowerShell.Commands.WriteErrorException"
+                   render_write_error_exception(parsed)
+                 when "NativeCommandError"
+                   render_native_command_error(parsed)
+                 when "NativeCommandErrorMessage"
+                   parsed.exception[:message]
+                 else
+                   render_exception(parsed)
+                 end
+               end
 
         hex_decode(text)
       end
@@ -129,11 +125,11 @@ EOH
         return unless text
 
         text.gsub(/_x(\h\h\h\h)_/) do
-          decoded_text = Regexp.last_match[1].hex.chr.force_encoding('utf-8')
+          decoded_text = Regexp.last_match[1].hex.chr.force_encoding("utf-8")
           if decoded_text.respond_to?(:scrub)
             decoded_text.scrub
           else
-            decoded_text.encode('utf-16', invalid: :replace, undef: :replace).encode('utf-8')
+            decoded_text.encode("utf-16", invalid: :replace, undef: :replace).encode("utf-8")
           end
         end
       end

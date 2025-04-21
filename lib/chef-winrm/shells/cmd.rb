@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'base'
+require_relative "base"
 
 module WinRM
   module Shells
@@ -52,7 +52,7 @@ module WinRM
       end
 
       def out_streams
-        %w[stdout stderr]
+        %w{stdout stderr}
       end
     end
   end

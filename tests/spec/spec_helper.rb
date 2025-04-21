@@ -1,8 +1,8 @@
-require 'rubygems'
-require 'bundler/setup'
-require 'chef-winrm'
-require 'json'
-require_relative '../matchers'
+require "rubygems"
+require "bundler/setup"
+require "chef-winrm"
+require "json"
+require_relative "../matchers"
 
 # Unit test spec helper
 module SpecUnitHelper
@@ -16,13 +16,13 @@ module SpecUnitHelper
 
   def default_connection_opts
     {
-      user: 'Administrator',
-      password: 'password',
-      endpoint: 'http://localhost:5985/wsman',
+      user: "Administrator",
+      password: "password",
+      endpoint: "http://localhost:5985/wsman",
       max_envelope_size: 153600,
-      session_id: '05A2622B-B842-4EB8-8A78-0225C8A993DF',
+      session_id: "05A2622B-B842-4EB8-8A78-0225C8A993DF",
       operation_timeout: 60,
-      locale: 'en-US'
+      locale: "en-US",
     }
   end
 end
@@ -33,7 +33,7 @@ end
 # and remove newlines.
 class String
   def unindent
-    gsub(/^#{self[/\A[ \t]*/]}/, '').delete("\n")
+    gsub(/^#{self[/\A[ \t]*/]}/, "").delete("\n")
   end
 
   def to_byte_string

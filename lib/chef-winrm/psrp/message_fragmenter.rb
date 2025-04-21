@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require_relative 'fragment'
+require_relative "fragment"
 
 module WinRM
   # PowerShell Remoting Protcol module
@@ -43,7 +43,7 @@ module WinRM
             object_id,
             message.bytes[bytes_fragmented..last_byte - 1],
             fragment_id,
-            bytes_fragmented.zero?,
+            bytes_fragmented == 0,
             last_byte == message_bytes.length
           )
           fragment_id += 1

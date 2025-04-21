@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'nori'
-require_relative 'base'
+require "nori"
+require_relative "base"
 
 module WinRM
   module WSMV
@@ -83,14 +83,14 @@ module WinRM
       def wql_body
         {
           "#{NS_WSMAN_DMTF}:OptimizeEnumeration" => nil,
-          "#{NS_WSMAN_DMTF}:MaxElements" => '32000',
+          "#{NS_WSMAN_DMTF}:MaxElements" => "32000",
           "#{NS_WSMAN_DMTF}:Filter" => @wql,
           "#{NS_WSMAN_MSFT}:SessionId" => "uuid:#{@session_opts[:session_id]}",
           :attributes! => {
             "#{NS_WSMAN_DMTF}:Filter" => {
-              'Dialect' => 'http://schemas.microsoft.com/wbem/wsman/1/WQL'
-            }
-          }
+              "Dialect" => "http://schemas.microsoft.com/wbem/wsman/1/WQL",
+            },
+          },
         }
       end
     end

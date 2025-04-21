@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'erubi'
-require_relative 'message'
+require "erubi"
+require_relative "message"
 
 module WinRM
   module PSRP
@@ -26,7 +26,7 @@ module WinRM
           Message.new(
             runspace_pool_id,
             Message::MESSAGE_TYPES[:session_capability],
-            render('session_capability')
+            render("session_capability")
           )
         end
 
@@ -36,7 +36,7 @@ module WinRM
           Message.new(
             runspace_pool_id,
             Message::MESSAGE_TYPES[:init_runspacepool],
-            render('init_runspace_pool')
+            render("init_runspace_pool")
           )
         end
 
@@ -49,7 +49,7 @@ module WinRM
           Message.new(
             runspace_pool_id,
             Message::MESSAGE_TYPES[:create_pipeline],
-            render('create_pipeline', command: command.encode(xml: :text)),
+            render("create_pipeline", command: command.encode(xml: :text)),
             pipeline_id
           )
         end

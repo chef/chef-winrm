@@ -1,15 +1,15 @@
-require_relative 'spec_helper'
+require_relative "spec_helper"
 
-describe 'WinRM connection' do
+describe "WinRM connection" do
   let(:connection) do
     endpoint = connection_opts[:endpoint].dup
     if auth_type == :ssl
-      endpoint.sub!('5985', '5986')
-      endpoint.sub!('http', 'https')
+      endpoint.sub!("5985", "5986")
+      endpoint.sub!("http", "https")
     end
     conn_options = {
       transport: auth_type,
-      endpoint: endpoint
+      endpoint: endpoint,
     }.merge(options)
     WinRM::Connection.new(conn_options).shell(:cmd)
   end
@@ -30,69 +30,69 @@ describe 'WinRM connection' do
   let(:user_cert) { nil }
   let(:user_key) { nil }
 
-  subject(:output) { connection.run('ipconfig') }
+  subject(:output) { connection.run("ipconfig") }
 
   after(:each) do
     connection.close
   end
 
-  shared_examples 'a valid_connection' do
-    it 'has a 0 exit code' do
+  shared_examples "a valid_connection" do
+    it "has a 0 exit code" do
       expect(subject).to have_exit_code 0
     end
 
-    it 'includes command output' do
+    it "includes command output" do
       expect(subject).to have_stdout_match(/Windows IP Configuration/)
     end
 
-    it 'has no errors' do
+    it "has no errors" do
       expect(subject).to have_no_stderr
     end
   end
 
-  context 'HttpPlaintext' do
+  context "HttpPlaintext" do
     let(:basic_auth_only) { true }
     let(:auth_type) { :plaintext }
 
-    it_behaves_like 'a valid_connection'
+    it_behaves_like "a valid_connection"
   end
 
-  context 'HttpNegotiate' do
+  context "HttpNegotiate" do
     let(:auth_type) { :negotiate }
 
-    it_behaves_like 'a valid_connection'
+    it_behaves_like "a valid_connection"
   end
 
-  context 'BasicAuthSSL', skip: ENV['winrm_cert'].nil? do
+  context "BasicAuthSSL", skip: ENV["winrm_cert"].nil? do
     let(:basic_auth_only) { true }
     let(:auth_type) { :ssl }
     let(:no_ssl_peer_verification) { true }
 
-    it_behaves_like 'a valid_connection'
+    it_behaves_like "a valid_connection"
   end
 
-  context 'ClientCertAuthSSL', skip: ENV['user_cert'].nil? do
+  context "ClientCertAuthSSL", skip: ENV["user_cert"].nil? do
     let(:auth_type) { :ssl }
     let(:no_ssl_peer_verification) { true }
-    let(:user_cert) { ENV['user_cert'] }
-    let(:user_key) { ENV['user_key'] }
+    let(:user_cert) { ENV["user_cert"] }
+    let(:user_key) { ENV["user_key"] }
 
     before { options[:pass] = nil }
 
-    it_behaves_like 'a valid_connection'
+    it_behaves_like "a valid_connection"
   end
 
-  context 'Negotiate over SSL', skip: ENV['winrm_cert'].nil? do
+  context "Negotiate over SSL", skip: ENV["winrm_cert"].nil? do
     let(:auth_type) { :ssl }
     let(:no_ssl_peer_verification) { true }
 
-    it_behaves_like 'a valid_connection'
+    it_behaves_like "a valid_connection"
   end
 
-  context 'SSL fingerprint', skip: ENV['winrm_cert'].nil? do
+  context "SSL fingerprint", skip: ENV["winrm_cert"].nil? do
     let(:auth_type) { :ssl }
-    let(:ssl_peer_fingerprint) { ENV['winrm_cert'] }
+    let(:ssl_peer_fingerprint) { ENV["winrm_cert"] }
 
-    it_behaves_like 'a valid_connection'
+    it_behaves_like "a valid_connection"
   end
 end

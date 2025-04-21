@@ -33,7 +33,7 @@ module WinRM
       @invalid_transport = invalid_transport
       super(
         "Invalid transport '#{invalid_transport}' specified" \
-        ", expected: #{valid_transports.join(', ')}."
+        ", expected: #{valid_transports.join(", ")}."
       )
     end
   end

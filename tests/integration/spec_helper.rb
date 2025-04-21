@@ -1,8 +1,8 @@
-require 'rubygems'
-require 'bundler/setup'
-require 'chef-winrm'
-require 'json'
-require_relative '../matchers'
+require "rubygems"
+require "bundler/setup"
+require "chef-winrm"
+require "json"
+require_relative "../matchers"
 
 # Creates a WinRM connection for integration tests
 module ConnectionHelper
@@ -18,16 +18,16 @@ module ConnectionHelper
   end
 
   def merge_environment(config)
-    merge_config_option_from_environment(config, 'user')
-    merge_config_option_from_environment(config, 'password')
-    merge_config_option_from_environment(config, 'no_ssl_peer_verification')
-    config[:ssl_peer_fingerprint] = ENV['winrm_cert'] if ENV['use_ssl_peer_fingerprint']
-    config[:endpoint] = ENV['winrm_endpoint'] if ENV['winrm_endpoint']
+    merge_config_option_from_environment(config, "user")
+    merge_config_option_from_environment(config, "password")
+    merge_config_option_from_environment(config, "no_ssl_peer_verification")
+    config[:ssl_peer_fingerprint] = ENV["winrm_cert"] if ENV["use_ssl_peer_fingerprint"]
+    config[:endpoint] = ENV["winrm_endpoint"] if ENV["winrm_endpoint"]
     config
   end
 
   def merge_config_option_from_environment(config, key)
-    env_key = 'winrm_' + key
+    env_key = "winrm_" + key
     config[key.to_sym] = ENV[env_key] if ENV[env_key]
   end
 
