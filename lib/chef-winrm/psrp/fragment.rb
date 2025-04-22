@@ -32,7 +32,7 @@ module WinRM
         @end_fragment = end_fragment
       end
 
-      attr_reader :object_id, :fragment_id, :end_fragment, :start_fragment, :blob
+      # attr_reader :object_id, :fragment_id, :end_fragment, :start_fragment, :blob
 
       # Returns the raw PSRP message bytes ready for transfer to Windows inside a
       # WinRM message.
