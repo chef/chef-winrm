@@ -40,6 +40,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "rexml", "~> 3.3" # needs to load at least 3.3.6 to get past a CVE
   s.add_development_dependency "pry"
   s.add_development_dependency "rake", ">= 10.3", "< 13"
+  s.add_development_dependency "ostruct"
+  s.add_development_dependency "fiddle"
+  s.add_development_dependency "benchmark"
   s.add_development_dependency "rb-readline"
   s.add_development_dependency "rspec", "~> 3.2"
   s.add_development_dependency "rubocop", "~> 1.25.1"
