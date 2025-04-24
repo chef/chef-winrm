@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.executables = ["rwinrm"]
   s.required_ruby_version = ">= 3.1"
   s.add_runtime_dependency "builder", ">= 2.1.2"
-  s.add_runtime_dependency "chef-gyoku", ">= 1.4.1"
+  s.add_runtime_dependency "chef-gyoku", ">= 1.5.0"
   s.add_runtime_dependency "erubi", "~> 1.8"
   s.add_runtime_dependency "gssapi", "~> 1.2"
   s.add_runtime_dependency "httpclient", "~> 2.2", ">= 2.2.0.2"
@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "fiddle"
   s.add_development_dependency "benchmark"
   s.add_development_dependency "rb-readline"
+  s.add_development_dependency "syslog"
   s.add_development_dependency "rspec", "~> 3.2"
   s.add_development_dependency "rubocop", "~> 1.25.1"
   s.add_development_dependency "cookstyle", ">= 7.32.8"
