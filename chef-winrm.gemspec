@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.executables = ["rwinrm"]
   s.required_ruby_version = ">= 3.1"
   s.add_dependency "builder", ">= 2.1.2"
-  s.add_dependency "chef-gyoku", ">= 1.5.0"
+  s.add_dependency "chef-gyoku", "~> 1.5"
   s.add_dependency "erubi", "~> 1.8"
   s.add_dependency "gssapi", "~> 1.2"
   s.add_dependency "httpclient", "~> 2.2", ">= 2.2.0.2"
