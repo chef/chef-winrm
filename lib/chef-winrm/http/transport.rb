@@ -171,7 +171,7 @@ module WinRM
         log_soap_message(message)
 
         hdr = {
-          "Content-Type" => "multipart/encrypted;"\
+          "Content-Type" => "multipart/encrypted;" \
             'protocol="application/HTTP-SPNEGO-session-encrypted";boundary="Encrypted Boundary"',
         }
 

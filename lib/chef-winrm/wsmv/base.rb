@@ -14,7 +14,7 @@
 
 require "base64" unless defined?(Base64)
 require "builder"
-require "gyoku"
+require "chef-gyoku"
 require_relative "soap"
 require_relative "header"
 

@@ -43,10 +43,10 @@ module WinRM
 
       def output_header
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell(@shell_uri),
-                      action_receive,
-                      header_opts,
-                      selector_shell_id(@shell_id))
+          resource_uri_shell(@shell_uri),
+          action_receive,
+          header_opts,
+          selector_shell_id(@shell_id))
       end
 
       def header_opts

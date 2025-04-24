@@ -44,9 +44,9 @@ module WinRM
 
       def cleanup_header
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell(@shell_uri),
-                      action_signal,
-                      selector_shell_id(@shell_id))
+          resource_uri_shell(@shell_uri),
+          action_signal,
+          selector_shell_id(@shell_id))
       end
 
       def cleanup_body

@@ -36,8 +36,8 @@ module WinRM
 
       def configuration_headers
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell("http://schemas.microsoft.com/wbem/wsman/1/config"),
-                      action_get)
+          resource_uri_shell("http://schemas.microsoft.com/wbem/wsman/1/config"),
+          action_get)
       end
     end
   end

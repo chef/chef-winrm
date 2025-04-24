@@ -57,9 +57,9 @@ module WinRM
 
       def shell_headers
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell(RESOURCE_URI_POWERSHELL),
-                      action_create,
-                      header_opts)
+          resource_uri_shell(RESOURCE_URI_POWERSHELL),
+          action_create,
+          header_opts)
       end
 
       def action_create
