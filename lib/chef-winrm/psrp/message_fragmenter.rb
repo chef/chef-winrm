@@ -22,14 +22,14 @@ module WinRM
       DEFAULT_BLOB_LENGTH = 32_768
 
       def initialize(max_blob_length = DEFAULT_BLOB_LENGTH)
-        @object_id = 0
+        @custom_object_id = 0
         @max_blob_length = max_blob_length || DEFAULT_BLOB_LENGTH
       end
 
       attr_accessor :max_blob_length
 
       def fragment(message)
-        @object_id += 1
+        @custom_object_id += 1
         message_bytes = message.bytes
         bytes_fragmented = 0
         fragment_id = 0
@@ -39,7 +39,7 @@ module WinRM
           last_byte = bytes_fragmented + max_blob_length
           last_byte = message_bytes.length if last_byte > message_bytes.length
           fragment = Fragment.new(
-            object_id,
+            custom_object_id,
             message.bytes[bytes_fragmented..last_byte - 1],
             fragment_id,
             bytes_fragmented == 0,
@@ -55,7 +55,7 @@ module WinRM
 
       private
 
-      attr_reader :object_id
+      attr_reader :custom_object_id
     end
   end
 end
