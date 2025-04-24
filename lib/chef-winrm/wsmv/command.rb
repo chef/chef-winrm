@@ -63,7 +63,7 @@ module WinRM
 
       def issue69_unescape_single_quotes(xml)
         escaped_cmd = %r{<#{NS_WIN_SHELL}:Command>(.+)<\/#{NS_WIN_SHELL}:Command>}m.match(xml)[1]
-        xml[escaped_cmd] = escaped_cmd.gsub(/&#39;/, "'")
+        xml[escaped_cmd] = escaped_cmd.gsub("&#39;", "'")
         xml
       end
 
@@ -75,10 +75,10 @@ module WinRM
 
       def command_headers
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell(@shell_uri),
-                      action_command,
-                      command_header_opts,
-                      selector_shell_id(@shell_id))
+          resource_uri_shell(@shell_uri),
+          action_command,
+          command_header_opts,
+          selector_shell_id(@shell_id))
       end
 
       def command_header_opts

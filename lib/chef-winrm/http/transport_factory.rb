@@ -46,7 +46,7 @@ module WinRM
           HTTP::BasicAuthSSL.new(opts[:endpoint], opts[:user], opts[:password], opts)
         elsif opts[:client_cert]
           HTTP::ClientCertAuthSSL.new(opts[:endpoint], opts[:client_cert],
-                                      opts[:client_key], opts[:key_pass], opts)
+            opts[:client_key], opts[:key_pass], opts)
         else
           HTTP::HttpNegotiate.new(opts[:endpoint], opts[:user], opts[:password], opts)
         end

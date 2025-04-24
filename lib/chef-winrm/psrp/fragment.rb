@@ -35,7 +35,6 @@ module WinRM
         @end_fragment = end_fragment
       end
 
-
       # Returns the raw PSRP message bytes ready for transfer to Windows inside a
       # WinRM message.
       # @return [Array<Byte>] Unencoded raw byte array of the PSRP message.

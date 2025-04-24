@@ -51,9 +51,9 @@ module WinRM
 
       def command_headers
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell(RESOURCE_URI_POWERSHELL),
-                      action_command,
-                      selector_shell_id(shell_id))
+          resource_uri_shell(RESOURCE_URI_POWERSHELL),
+          action_command,
+          selector_shell_id(shell_id))
       end
 
       def arguments

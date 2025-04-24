@@ -40,9 +40,9 @@ module WinRM
 
       def close_header
         merge_headers(shared_headers(@session_opts),
-                      resource_uri_shell(@shell_uri),
-                      action_delete,
-                      selector_shell_id(@shell_id))
+          resource_uri_shell(@shell_uri),
+          action_delete,
+          selector_shell_id(@shell_id))
       end
     end
   end
