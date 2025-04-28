@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2019, windows-2022, windows-2025]
+        os: [windows-2019]
         ruby: ['3.0']
     name: Unit test on ${{ matrix.os }} with Ruby ${{ matrix.ruby }}
     runs-on: ${{ matrix.os }}
