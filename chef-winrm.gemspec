@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rb-readline"
   s.add_development_dependency "syslog"
   s.add_development_dependency "rspec", "~> 3.2"
-  s.add_development_dependency "cookstyle", "~> 8.1"
+  s.add_development_dependency "cookstyle", "~> 7.32"
   s.add_dependency "rubyntlm", "~> 0.6.0", ">= 0.6.3"
 
   s.metadata["rubygems_mfa_required"] = "true"
