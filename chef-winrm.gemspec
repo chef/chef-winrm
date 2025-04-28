@@ -36,7 +36,8 @@ Gem::Specification.new do |s|
   s.add_dependency "httpclient", "~> 2.2", ">= 2.2.0.2"
   s.add_dependency "logging", [">= 1.6.1", "< 3.0"]
   s.add_dependency "nori", "= 2.7.0" # nori 2.7.1 has a bug where it throws a NoMethodError for snakecase.
-  s.add_dependency "rexml", "~> 3.3" # needs to load at least 3.3.6 to get past a CVE
+  s.add_dependency "rexml", "~> 3.3"
+  s.add_dependency "ffi", ">= 1.15.5", "< 1.17.0" # needs to load at least 3.3.6 to get past a CVE
   s.add_development_dependency "pry"
   s.add_development_dependency "rake", ">= 10.3", "< 13"
   s.add_development_dependency "ostruct"
