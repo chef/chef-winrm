@@ -224,7 +224,7 @@ The repository uses the following GitHub labels:
 
 ### CI/CD Workflows
 - **Lint Workflow**: Runs cookstyle on all pull requests and main branch pushes
-- **Unit Test Workflow**: Runs unit tests on Windows 2019/2022 with Ruby 3.1/3.4
+- **Unit Test Workflow**: Runs unit tests on Windows 2022/2025 with Ruby 3.1/3.4
 
 ## Pull Request Creation Workflow
 
