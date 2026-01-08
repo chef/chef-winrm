@@ -95,7 +95,7 @@ module WinRM
       end
 
       def self.finalize(connection_opts, transport, shell_id)
-        proc { Thread.new { close_shell(connection_opts, transport, shell_id) } }
+        proc { close_shell(connection_opts, transport, shell_id) }
       end
 
       protected
