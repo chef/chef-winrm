@@ -99,7 +99,7 @@ module WinRM
         # HTTP operations which need threads. Ruby 3.3+ doesn't allow thread
         # creation during finalization. The WinRM server will clean up
         # orphaned shells after the timeout period.
-        proc { }
+        proc {}
       end
 
       protected
