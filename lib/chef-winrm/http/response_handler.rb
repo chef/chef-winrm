@@ -67,8 +67,8 @@ module WinRM
       return if soap_errors.empty?
 
       fault = REXML::XPath.first(
-        soap_errors,
-        "//*[local-name() = 'WSManFault']"
+        response_xml,
+        "//*[local-name() = 'Envelope']/*[local-name() = 'Body']/*[local-name() = 'Fault']/*[local-name() = 'Detail']//*[local-name() = 'WSManFault']"
       )
       raise WinRMWSManFault.new(fault.to_s, fault.attributes["Code"]) unless fault.nil?
     end
@@ -81,8 +81,8 @@ module WinRM
       return if soap_errors.empty?
 
       error = REXML::XPath.first(
-        soap_errors,
-        "//*[local-name() = 'MSFT_WmiError']"
+        response_xml,
+        "//*[local-name() = 'Envelope']/*[local-name() = 'Body']/*[local-name() = 'Fault']/*[local-name() = 'Detail']//*[local-name() = 'MSFT_WmiError']"
       )
       return if error.nil?
 
@@ -101,16 +101,16 @@ module WinRM
       return if soap_errors.empty?
 
       code = REXML::XPath.first(
-        soap_errors,
-        "//*[local-name() = 'Code']/*[local-name() = 'Value']/text()"
+        response_xml,
+        "//*[local-name() = 'Envelope']/*[local-name() = 'Body']/*[local-name() = 'Fault']/*[local-name() = 'Code']/*[local-name() = 'Value']/text()"
       )
       subcode = REXML::XPath.first(
-        soap_errors,
-        "//*[local-name() = 'Subcode']/*[local-name() = 'Value']/text()"
+        response_xml,
+        "//*[local-name() = 'Envelope']/*[local-name() = 'Body']/*[local-name() = 'Fault']/*[local-name() = 'Code']/*[local-name() = 'Subcode']/*[local-name() = 'Value']/text()"
       )
       reason = REXML::XPath.first(
-        soap_errors,
-        "//*[local-name() = 'Reason']/*[local-name() = 'Text']/text()"
+        response_xml,
+        "//*[local-name() = 'Envelope']/*[local-name() = 'Body']/*[local-name() = 'Fault']/*[local-name() = 'Reason']/*[local-name() = 'Text']/text()"
       )
 
       raise WinRMSoapFault.new(code, subcode, reason) unless
