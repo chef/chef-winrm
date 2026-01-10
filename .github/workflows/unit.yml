@@ -47,13 +47,13 @@ jobs:
       - name: Setup Machine
         run: |
           winrm.cmd quickconfig -q
-          net user /add vagrant vagrant
+          net user /add vagrant Pass@word1
           net localgroup administrators vagrant /add
           @"
           endpoint: "http://localhost:5985/wsman"
           user: vagrant
-          password: vagrant
+          password: Pass@word1
           "@ | Out-File -FilePath tests/integration/config.yml -Encoding utf8
 
-      - name: Verify Windows
+      - name: Run Integration Tests
         run: bundle exec rake integration
