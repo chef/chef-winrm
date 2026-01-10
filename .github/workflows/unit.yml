@@ -47,6 +47,8 @@ jobs:
       - name: Setup Machine
         run: |
           winrm.cmd quickconfig -q
+          winrm.cmd set winrm/config/service/auth '@{Basic="true"}'
+          winrm.cmd set winrm/config/service '@{AllowUnencrypted="true"}'
           net user /add vagrant Pass@word1
           net localgroup administrators vagrant /add
           @"

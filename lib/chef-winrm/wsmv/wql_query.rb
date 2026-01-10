@@ -30,7 +30,7 @@ module WinRM
         parser = Nori.new(
           parser: :rexml,
           advanced_typecasting: false,
-          convert_tags_to: ->(tag) { Nori::StringUtils.snakecase(tag).to_sym },
+          convert_tags_to: ->(tag) { tag.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase.to_sym },
           strip_namespaces: true
         )
         @items = Hash.new { |h, k| h[k] = [] }
