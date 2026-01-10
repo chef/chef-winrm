@@ -2,5 +2,5 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "mwrock/WindowsNano"
+  config.vm.box = "stromweld/windows-11"
 end
