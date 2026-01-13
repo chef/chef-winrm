@@ -1,6 +1,6 @@
 # WinRM Gem Changelog
 
-## 2.4.5
+## 2.5.0
 
 - Bump rexml minimum bersion to 3.4.2 for CVE fixes
 - Remove use of deprecated rexml array passing to XPATH methods
