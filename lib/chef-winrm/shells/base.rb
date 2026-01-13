@@ -95,7 +95,11 @@ module WinRM
       end
 
       def self.finalize(connection_opts, transport, shell_id)
-        proc { Thread.new { close_shell(connection_opts, transport, shell_id) } }
+        # Don't attempt to close shell during finalization as it requires
+        # HTTP operations which need threads. Ruby 3.3+ doesn't allow thread
+        # creation during finalization. The WinRM server will clean up
+        # orphaned shells after the timeout period.
+        proc {}
       end
 
       protected
