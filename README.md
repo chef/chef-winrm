@@ -275,3 +275,6 @@ To run the integration tests you will need a Windows box with the WinRM service 
 * Matt Wrock (https://github.com/mwrock)
 
 [Contributors](https://github.com/WinRb/WinRM/graphs/contributors)
+
+# Copyright
+See [COPYRIGHT.md](./COPYRIGHT.md).
