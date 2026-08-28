@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/cleanup_command"
 
-describe WinRM::WSMV::CleanupCommand do
+RSpec.describe WinRM::WSMV::CleanupCommand do
   context "default session options" do
     let(:cmd_opts) do
       {

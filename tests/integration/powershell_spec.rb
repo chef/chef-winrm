@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe "winrm client powershell" do
+RSpec.describe "winrm client powershell" do
   before(:all) do
     @powershell = winrm_connection.shell(:powershell)
   end

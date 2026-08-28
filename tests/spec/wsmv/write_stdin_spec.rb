@@ -1,7 +1,7 @@
 require "base64"
 require "chef-winrm/wsmv/write_stdin"
 
-describe WinRM::WSMV::WriteStdin do
+RSpec.describe WinRM::WSMV::WriteStdin do
   context "default session options" do
     stdin_opts = {
       shell_id: "D5A2622B-B842-4EB8-8A78-0225C8A993DF",

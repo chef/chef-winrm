@@ -1,7 +1,7 @@
 require "chef-winrm/psrp/message_data/base"
 require "chef-winrm/psrp/message_data/session_capability"
 
-describe WinRM::PSRP::MessageData::SessionCapability do
+RSpec.describe WinRM::PSRP::MessageData::SessionCapability do
   let(:protocol_version) { "2.2" }
   let(:ps_version) { "2.0" }
   let(:serialization_version) { "1.1.0.1" }

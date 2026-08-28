@@ -1,6 +1,6 @@
 require "chef-winrm/connection_opts"
 
-describe WinRM::ConnectionOpts do
+RSpec.describe WinRM::ConnectionOpts do
   shared_examples "invalid options" do |error_type|
     it "throws a validation error" do
       expect { WinRM::ConnectionOpts.create_with_defaults(overrides) }.to raise_error error_type

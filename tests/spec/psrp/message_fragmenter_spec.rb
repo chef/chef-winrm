@@ -1,7 +1,7 @@
 require "chef-winrm/psrp/message"
 require "chef-winrm/psrp/message_fragmenter"
 
-describe WinRM::PSRP::MessageFragmenter do
+RSpec.describe WinRM::PSRP::MessageFragmenter do
   let(:message) do
     WinRM::PSRP::Message.new(
       "bc1bfbba-8215-4a04-b2df-7a3ac0310e16",

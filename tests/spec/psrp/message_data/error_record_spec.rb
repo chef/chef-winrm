@@ -1,7 +1,7 @@
 require "chef-winrm/psrp/message_data/base"
 require "chef-winrm/psrp/message_data/error_record"
 
-describe WinRM::PSRP::MessageData::ErrorRecord do
+RSpec.describe WinRM::PSRP::MessageData::ErrorRecord do
   let(:test_data_xml_template) do
     ERB.new(stubbed_clixml("error_record.xml.erb"))
   end

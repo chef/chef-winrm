@@ -1,6 +1,6 @@
 require "chef-winrm/psrp/message_factory"
 
-describe WinRM::PSRP::MessageFactory do
+RSpec.describe WinRM::PSRP::MessageFactory do
   let(:runspace_pool_id) { "bc1bfbba-8215-4a04-b2df-7a3ac0310e16" }
   let(:pipeline_id) { "6f8b3b8a-a4e9-4a2f-9a1c-1f2e3d4c5b6a" }
 

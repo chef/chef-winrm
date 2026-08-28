@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/command_output_decoder"
 
-describe WinRM::WSMV::CommandOutputDecoder do
+RSpec.describe WinRM::WSMV::CommandOutputDecoder do
   let(:raw_output_with_bom) do
     "77u/" \
     "ICAgQ29ubmVjdGlvbi1zcGVjaWZpYyBETlMgU3VmZml4ICAuIDogDQogICBMaW5rLWxvY2FsIElQdjYgQWRkcmVzcyA" \

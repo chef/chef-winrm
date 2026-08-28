@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/wql_query"
 
-describe WinRM::WSMV::WqlQuery do
+RSpec.describe WinRM::WSMV::WqlQuery do
   context "default session options" do
     subject { described_class.new(nil, default_connection_opts, "SELECT * FROM Win32") }
     let(:xml) { subject.build }
