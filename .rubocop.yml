@@ -2,7 +2,6 @@ AllCops:
   TargetRubyVersion: 2.7
 
   Exclude:
-    - 'appveyor.yml'
     - 'Vagrantfile'
     - 'scripts/**/*'
     - 'vendor/**/*'
