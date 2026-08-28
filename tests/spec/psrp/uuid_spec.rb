@@ -1,4 +1,4 @@
-describe WinRM::PSRP::UUID do
+RSpec.describe WinRM::PSRP::UUID do
   subject(:uuid_helper) do
     Object.new.extend(WinRM::PSRP::UUID)
   end

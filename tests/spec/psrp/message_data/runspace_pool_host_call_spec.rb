@@ -1,7 +1,7 @@
 require "chef-winrm/psrp/message_data/base"
 require "chef-winrm/psrp/message_data/runspacepool_host_call"
 
-describe WinRM::PSRP::MessageData::RunspacepoolHostCall do
+RSpec.describe WinRM::PSRP::MessageData::RunspacepoolHostCall do
   let(:raw_data) do
     "\xEF\xBB\xBF<Obj RefId=\"0\"><MS><I64 N=\"ci\">-100</I64><Obj N=\"mi\" RefId=\"1\">"\
     '<TN RefId="0"><T>System.Management.Automation.Remoting.RemoteHostMethodId</T>'\

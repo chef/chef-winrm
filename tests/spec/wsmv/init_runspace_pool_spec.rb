@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/init_runspace_pool"
 
-describe WinRM::WSMV::InitRunspacePool do
+RSpec.describe WinRM::WSMV::InitRunspacePool do
   context "default session options" do
     let(:shell_id) { SecureRandom.uuid.to_s.upcase }
     let(:payload) { "blah".bytes }

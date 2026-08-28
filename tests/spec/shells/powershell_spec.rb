@@ -1,6 +1,6 @@
 require "chef-winrm/shells/power_shell"
 
-describe WinRM::Shells::Powershell do
+RSpec.describe WinRM::Shells::Powershell do
   let(:retry_limit) { 1 }
   let(:max_envelope_size_kb) { 150 }
   let(:shell_id) { "bc1bfbba-8215-4a04-b2df-7a3ac0310e16" }
@@ -210,9 +210,11 @@ describe WinRM::Shells::Powershell do
         end
 
         it "creates a shell closer with powershell uri" do
-          allow(WinRM::WSMV::CloseShell).to receive(:new) do |_, opts|
-            expect(opts[:shell_uri]).to be WinRM::WSMV::Header::RESOURCE_URI_POWERSHELL
-          end.and_call_original
+          subject.run(command)
+          expect(WinRM::WSMV::CloseShell).to receive(:new).and_wrap_original do |original, *args|
+            expect(args.last[:shell_uri]).to be WinRM::WSMV::Header::RESOURCE_URI_POWERSHELL
+            original.call(*args)
+          end
           subject.close
         end
       end

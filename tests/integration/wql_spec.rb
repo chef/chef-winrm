@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe "winrm client wql" do
+RSpec.describe "winrm client wql" do
   before(:all) do
     @winrm = winrm_connection
   end

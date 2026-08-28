@@ -1,7 +1,7 @@
 require "chef-winrm/psrp/message"
 require "chef-winrm/psrp/message_data"
 
-describe WinRM::PSRP::MessageData do
+RSpec.describe WinRM::PSRP::MessageData do
   describe "#parse" do
     let(:raw_data) { "raw_data" }
     let(:message) do

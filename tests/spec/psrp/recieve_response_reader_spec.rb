@@ -1,6 +1,6 @@
 require "chef-winrm/psrp/receive_response_reader"
 
-describe WinRM::PSRP::ReceiveResponseReader do
+RSpec.describe WinRM::PSRP::ReceiveResponseReader do
   let(:shell_id) { "F4A2622B-B842-4EB8-8A78-0225C8A993DF" }
   let(:command_id) { "A2A2622B-B842-4EB8-8A78-0225C8A993DF" }
   let(:output_message) { double("output_message", build: "output_message") }
@@ -22,7 +22,7 @@ describe WinRM::PSRP::ReceiveResponseReader do
   end
   let(:fragment) { WinRM::PSRP::Fragment.new(1, message.bytes) }
   let(:test_data_stdout) { Base64.strict_encode64(fragment.bytes.pack("C*")) }
-  let(:transport) { {} }
+  let(:transport) { double("transport") }
 
   before do
     allow(transport).to receive(:send_request).and_return(

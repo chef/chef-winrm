@@ -1,6 +1,6 @@
 require "chef-winrm/shells/cmd"
 
-describe WinRM::Shells::Cmd do
+RSpec.describe WinRM::Shells::Cmd do
   let(:retry_limit) { 1 }
   let(:shell_id) { "shell_id" }
   let(:output) { "output" }
@@ -66,9 +66,11 @@ describe WinRM::Shells::Cmd do
     end
 
     it "creates a shell closer with default shell uri" do
-      allow(WinRM::WSMV::CloseShell).to receive(:new) do |_, opts|
-        expect(opts[:shell_uri]).to be nil
-      end.and_call_original
+      subject.run(command, arguments)
+      expect(WinRM::WSMV::CloseShell).to receive(:new).and_wrap_original do |original, *args|
+        expect(args.last[:shell_uri]).to be nil
+        original.call(*args)
+      end
       subject.close
     end
   end

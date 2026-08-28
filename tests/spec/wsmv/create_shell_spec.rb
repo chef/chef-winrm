@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/create_shell"
 
-describe WinRM::WSMV::CreateShell do
+RSpec.describe WinRM::WSMV::CreateShell do
   context "default session options" do
     subject { described_class.new(default_connection_opts) }
     let(:xml) { subject.build }

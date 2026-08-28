@@ -1,6 +1,6 @@
 require "chef-winrm/http/response_handler"
 
-describe "response handler", unit: true do
+RSpec.describe "response handler", unit: true do
   %w{v1 v2 omi}.each do |winrm_version|
     context "winrm_version #{winrm_version}" do
       let(:soap_fault) { stubbed_response("soap_fault_#{winrm_version}.xml") }
