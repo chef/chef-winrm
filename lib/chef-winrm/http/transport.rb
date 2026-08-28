@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require "httpclient"
 require_relative "response_handler"
 
 module WinRM
@@ -24,6 +23,13 @@ module WinRM
       attr_reader :endpoint
 
       def initialize(endpoint, options)
+        # Loaded here rather than at the top of the file so that requiring
+        # chef-winrm does not pull in httpclient and, through it, openssl and
+        # uri. Consumers that load the library without opening a connection
+        # pay nothing for the transport stack. This mirrors how rubyntlm and
+        # gssapi are already loaded by the transports that need them.
+        require "httpclient"
+
         @endpoint = endpoint.is_a?(String) ? URI.parse(endpoint) : endpoint
         @httpcli = HTTPClient.new
         @logger = Logging.logger[self]
