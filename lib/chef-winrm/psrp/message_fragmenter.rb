@@ -40,7 +40,7 @@ module WinRM
           last_byte = message_bytes.length if last_byte > message_bytes.length
           fragment = Fragment.new(
             custom_object_id,
-            message.bytes[bytes_fragmented..last_byte - 1],
+            message_bytes[bytes_fragmented..last_byte - 1],
             fragment_id,
             bytes_fragmented == 0,
             last_byte == message_bytes.length

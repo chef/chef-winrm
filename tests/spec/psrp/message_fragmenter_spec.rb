@@ -100,4 +100,19 @@ describe WinRM::PSRP::MessageFragmenter do
       expect(subject[2].fragment_id).to eq(2)
     end
   end
+
+  context "a message spanning many fragments" do
+    let(:data) { "a" * 4_000 }
+
+    it "serializes the message bytes exactly once, regardless of fragment count" do
+      allow(message).to receive(:bytes).and_call_original
+      described_class.new(45).fragment(message) { |fragment| fragment }
+      expect(message).to have_received(:bytes).once
+    end
+
+    it "reassembles to the original message bytes" do
+      expect(subject.length).to be > 50
+      expect(subject.flat_map(&:blob)).to eq(message.bytes)
+    end
+  end
 end
