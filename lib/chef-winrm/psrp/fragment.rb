@@ -39,13 +39,12 @@ module WinRM
       # WinRM message.
       # @return [Array<Byte>] Unencoded raw byte array of the PSRP message.
       def bytes
-        [
-          int64be(psrp_object_id),
+        int64be(psrp_object_id).concat(
           int64be(fragment_id),
           end_start_fragment,
           int16be(blob.length),
-          blob,
-        ].flatten
+          blob
+        )
       end
 
       private
