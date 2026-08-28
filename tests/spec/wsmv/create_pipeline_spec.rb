@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/create_pipeline"
 
-describe WinRM::WSMV::CreatePipeline do
+RSpec.describe WinRM::WSMV::CreatePipeline do
   context "default session options" do
     let(:shell_id) { "D5A2622B-B842-4EB8-8A78-0225C8A993DF" }
     let(:command_id) { "D5A2622B-B842-4EB8-8A78-0225C8A993DF" }

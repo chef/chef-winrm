@@ -30,7 +30,7 @@ class DummyShell < WinRM::Shells::Base
   end
 end
 
-describe DummyShell do
+RSpec.describe DummyShell do
   let(:retry_limit) { 1 }
   let(:shell_id) { "shell_id" }
   let(:output) { "output" }

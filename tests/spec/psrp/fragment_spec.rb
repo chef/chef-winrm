@@ -1,6 +1,6 @@
 require "chef-winrm/psrp/fragment"
 
-describe WinRM::PSRP::Fragment do
+RSpec.describe WinRM::PSRP::Fragment do
   let(:id) { 1 }
   let(:message) { "blah blah blah" }
 

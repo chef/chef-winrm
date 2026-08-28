@@ -14,6 +14,16 @@ module SpecUnitHelper
     File.read("tests/spec/stubs/clixml/#{file}")
   end
 
+  # Strips the leading whitespace that matches the first line's indentation from
+  # every line, leaving any _additional_ indentation intact, and removes newlines.
+  def unindent(string)
+    string.gsub(/^#{string[/\A[ \t]*/]}/, "").delete("\n")
+  end
+
+  def to_byte_string(string)
+    string.dup.force_encoding(Encoding::ASCII_8BIT)
+  end
+
   def default_connection_opts
     {
       user: "Administrator",
@@ -27,21 +37,22 @@ module SpecUnitHelper
   end
 end
 
-# Strip leading whitespace from each line that is the same as the
-# amount of whitespace on the first line of the string.
-# Leaves _additional_ indentation on later lines intact.
-# and remove newlines.
-class String
-  def unindent
-    gsub(/^#{self[/\A[ \t]*/]}/, "").delete("\n")
-  end
-
-  def to_byte_string
-    force_encoding(Encoding::ASCII_8BIT)
-  end
-end
-
 RSpec.configure do |config|
   config.include(SpecUnitHelper)
   config.raise_errors_for_deprecations!
+
+  # Require RSpec.describe rather than a top level describe, and drop the
+  # should syntax, so the specs stop monkey patching every object in the suite.
+  config.disable_monkey_patching!
+
+  # Fail a spec that stubs a method the real object does not define, which is
+  # the main way stubbed specs rot without anyone noticing.
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+
+  # Surface order dependencies between examples. The seed is printed on every
+  # run so a failure can be reproduced with --seed.
+  config.order = :random
+  Kernel.srand config.seed
 end

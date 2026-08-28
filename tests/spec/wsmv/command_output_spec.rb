@@ -1,7 +1,7 @@
 require "chef-winrm/wsmv/command_output"
 require "chef-winrm/wsmv/header"
 
-describe WinRM::WSMV::CommandOutput do
+RSpec.describe WinRM::WSMV::CommandOutput do
   context "default session options" do
     let(:cmd_out_opts) do
       {

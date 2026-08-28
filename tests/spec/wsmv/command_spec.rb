@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/command"
 
-describe WinRM::WSMV::Command do
+RSpec.describe WinRM::WSMV::Command do
   context "default session options" do
     let(:cmd_opts) do
       {

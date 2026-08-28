@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe "WinRM connection" do
+RSpec.describe "WinRM connection" do
   let(:connection) do
     endpoint = connection_opts[:endpoint].dup
     if auth_type == :ssl

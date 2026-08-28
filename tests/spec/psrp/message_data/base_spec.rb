@@ -1,6 +1,6 @@
 require "chef-winrm/psrp/message_data/base"
 
-describe WinRM::PSRP::MessageData::Base do
+RSpec.describe WinRM::PSRP::MessageData::Base do
   let(:raw_data) { "raw_data" }
 
   subject { WinRM::PSRP::MessageData::Base.new(raw_data) }

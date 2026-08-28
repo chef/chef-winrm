@@ -2,7 +2,7 @@ require "chef-winrm"
 require "chef-winrm/shells/cmd"
 require "chef-winrm/shells/power_shell"
 
-describe WinRM::Connection do
+RSpec.describe WinRM::Connection do
   context "new" do
     it "creates a new winrm session" do
       connection = WinRM::Connection.new(default_connection_opts)

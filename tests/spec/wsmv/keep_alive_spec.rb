@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/keep_alive"
 
-describe WinRM::WSMV::KeepAlive do
+RSpec.describe WinRM::WSMV::KeepAlive do
   context "default session options" do
     let(:shell_id) { "F4A2622B-B842-4EB8-8A78-0225C8A993DF" }
     subject { described_class.new(default_connection_opts, shell_id) }
