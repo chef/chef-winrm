@@ -32,7 +32,7 @@ module WinRM
         # rubocop:disable Style/GuardClause
         if fragment.end_fragment
           blob = []
-          @messages.delete(fragment.psrp_object_id).each { |frag| blob += frag.blob }
+          @messages.delete(fragment.psrp_object_id).each { |frag| blob.concat(frag.blob) }
           message_from(blob.pack("C*"))
         end
         # rubocop:enable Style/GuardClause
