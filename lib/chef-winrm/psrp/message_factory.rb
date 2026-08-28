@@ -62,10 +62,7 @@ module WinRM
         # @return [String] The rendered XML PSRP message.
         # @api private
         def render(template, context = nil)
-          template_path = File.expand_path(
-            "#{File.dirname(__FILE__)}/#{template}.xml.erb"
-          )
-          template = File.read(template_path)
+          src = compiled_template(template)
           case context
           when Hash
             b = binding
@@ -78,7 +75,22 @@ module WinRM
           else
             raise ArgumentError
           end
-          b.eval(Erubi::Engine.new(template).src)
+          b.eval(src)
+        end
+
+        # The templates ship inside the gem and never change between calls, so
+        # the read and the ERB compile are done once per template.
+        # @param template [String] The base filename of the PSRP message template.
+        # @return [String] The Ruby source Erubi compiled the template to.
+        # @api private
+        def compiled_template(template)
+          @compiled_templates ||= {}
+          @compiled_templates[template] ||= begin
+            template_path = File.expand_path(
+              "#{File.dirname(__FILE__)}/#{template}.xml.erb"
+            )
+            Erubi::Engine.new(File.read(template_path)).src
+          end
         end
       end
     end
