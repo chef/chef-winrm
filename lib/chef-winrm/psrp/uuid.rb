@@ -31,8 +31,10 @@ module WinRM
       def uuid_to_windows_guid_bytes(uuid)
         return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] unless uuid
 
-        b = uuid.scan(/[0-9a-fA-F]{2}/).map { |x| x.to_i(16) }
-        b[0..3].reverse + b[4..5].reverse + b[6..7].reverse + b[8..15]
+        # delete("^0-9a-fA-F") strips hyphens, braces and any other separator,
+        # matching what the equivalent scan for hex pairs used to tolerate.
+        b = [uuid.delete("^0-9a-fA-F")].pack("H*").unpack("C*")
+        b[0..3].reverse!.concat(b[4..5].reverse!, b[6..7].reverse!, b[8..15])
       end
     end
   end
