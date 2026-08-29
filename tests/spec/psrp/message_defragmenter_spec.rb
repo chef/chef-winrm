@@ -42,4 +42,44 @@ describe WinRM::PSRP::MessageDefragmenter do
       expect(message.data[3..-1]).to eq(blob.data)
     end
   end
+
+  context "many fragments from interleaved messages" do
+    let(:message) do
+      WinRM::PSRP::Message.new(
+        "bc1bfbba-8215-4a04-b2df-7a3ac0310e16",
+        WinRM::PSRP::Message::MESSAGE_TYPES[:pipeline_output],
+        "<S>#{"chunky bacon " * 500}</S>"
+      )
+    end
+
+    def wire(object_id)
+      bytes = message.bytes
+      fragments = []
+      offset = 0
+      until offset >= bytes.length
+        last = [offset + 64, bytes.length].min
+        fragments << WinRM::PSRP::Fragment.new(
+          object_id, bytes[offset..last - 1], fragments.length, offset == 0, last == bytes.length
+        )
+        offset = last
+      end
+      fragments.map { |f| Base64.strict_encode64(f.bytes.pack("C*")) }
+    end
+
+    it "reassembles a message spanning many fragments in order" do
+      stream = wire(1)
+      expect(stream.length).to be > 50
+      results = stream.map { |f| subject.defragment(f) }.compact
+      expect(results.length).to eq(1)
+      expect(results.first.data[3..-1]).to eq(message.data.b)
+    end
+
+    it "keeps interleaved messages separate" do
+      a = wire(1)
+      b = wire(2)
+      results = a.zip(b).flatten.compact.map { |f| subject.defragment(f) }.compact
+      expect(results.length).to eq(2)
+      expect(results.map { |m| m.data[3..-1] }.uniq).to eq([message.data.b])
+    end
+  end
 end
