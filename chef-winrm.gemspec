@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency "erubi", "~> 1.8"
   s.add_dependency "gssapi", "~> 1.2"
   s.add_dependency "httpclient", "~> 2.2", ">= 2.2.0.2"
-  s.add_dependency "logging", [">= 1.6.1", "< 3.0"]
+  s.add_dependency "logger", "~> 1.6"
   s.add_dependency "nori", "~> 2.7"
   s.add_dependency "rexml", ">= 3.4.2", "< 4.0" # needs to load at least 3.4.2 for several CVE fixes
   s.add_dependency "rubyntlm", "~> 0.6.0", ">= 0.6.3"

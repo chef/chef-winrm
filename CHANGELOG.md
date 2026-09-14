@@ -1,5 +1,14 @@
 # WinRM Gem Changelog
 
+## Unreleased
+
+- Replace the `logging` gem with the Ruby standard library `Logger`, removing a runtime dependency. `WinRM::Connection#logger` now returns a `WinRM::CompatLogger`, a stdlib `Logger` subclass that still accepts `add_appenders` but warns that it is deprecated and has no effect
+- Set the default log level from the `WINRM_LOG` environment variable via `WinRM.default_log_level`, and share the connection's logger with its transport instead of building a second one
+- Close orphaned remote shells from an `at_exit` handler when Ruby forbids allocating a thread during finalization, rather than leaking the shell until the WinRM server's idle timeout expires
+- Remove the dead AppVeyor CI configuration
+- Rename `changelog.md` to the canonical `CHANGELOG.md`
+- Run the unit workflow on pushes to `main`; its trigger still named the nonexistent `master` branch
+
 ## 2.5.0
 
 - Bump rexml minimum bersion to 3.4.2 for CVE fixes

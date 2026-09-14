@@ -215,7 +215,7 @@ Perform the following steps to authenticate with a certificate instead of a user
 See [this post](http://www.hurryupandwait.io/blog/certificate-password-less-based-authentication-in-winrm) for more details on certificate authentication.
 
 ## Logging
-The `WinRM::Connection` exposes a `logger` attribute and uses the [logging](https://rubygems.org/gems/logging) gem to manage logging behavior. By default this appends to `STDOUT` and has a level of `:warn`, but one can adjust the level or add additional appenders.
+The `WinRM::Connection` exposes a `logger` attribute and uses the Ruby standard library [Logger](https://docs.ruby-lang.org/en/master/Logger.html). By default this logs to `STDOUT` with a level of `:warn`, but one can adjust the level or replace the logger entirely.
 ```ruby
 conn = WinRM::Connection.new(opts)
 
@@ -223,13 +223,17 @@ conn = WinRM::Connection.new(opts)
 conn.logger.level = :error
 
 # Log to a file
-conn.logger.add_appenders(Logging.appenders.file('error.log'))
+conn.logger = Logger.new('error.log')
 ```
 
-If a consuming application uses its own logger that complies to the logging API, you can simply swap it in:
+The default log level can also be set with the `WINRM_LOG` environment variable (`debug`, `info`, `warn`, `error` or `fatal`).
+
+If a consuming application uses its own logger that complies to the stdlib `Logger` API, you can simply swap it in:
 ```ruby
 conn.logger = my_logger
 ```
+
+Upgrading from the `logging` gem: the one `logging`-specific call that used to work, `conn.logger.add_appenders(...)`, is still accepted but logs a deprecation warning and has no effect. Configure the stdlib logger directly (or inject your own) instead.
 
 ## Troubleshooting
 You may have some errors like ```WinRM::WinRMAuthorizationError```. See [this post](http://www.hurryupandwait.io/blog/understanding-and-troubleshooting-winrm-connection-and-authentication-a-thrill-seekers-guide-to-adventure) for tips and troubleshooting steps related to winrm connection and authentication issues.
