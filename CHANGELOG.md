@@ -8,6 +8,7 @@
 - Remove the dead AppVeyor CI configuration
 - Rename `changelog.md` to the canonical `CHANGELOG.md`
 - Run the unit workflow on pushes to `main`; its trigger still named the nonexistent `master` branch
+- Exclude rubyntlm 0.6.7, which raises `NameError` from every NTLM session key derivation and breaks all NTLM and Negotiate connections. Adds a contract spec so a future break surfaces in the unit suite rather than only in integration
 
 ## 2.5.0
 
