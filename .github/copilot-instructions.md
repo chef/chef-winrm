@@ -94,7 +94,7 @@ chef-winrm/
 ├── Rakefile                    # Build tasks
 ├── README.md                   # Documentation
 ├── LICENSE                     # Apache 2.0 license
-├── changelog.md                # Version history
+├── CHANGELOG.md                # Version history
 ├── Vagrantfile                 # Development VM configuration
 └── preamble                    # License preamble
 ```
@@ -145,7 +145,7 @@ mcp_atlassian-mcp_getJiraIssue --cloudId=<cloud-id> --issueIdOrKey=<jira-id>
 5. **Documentation**
    - Update README.md if public API changes
    - Add inline documentation for new methods/classes
-   - Update changelog.md with breaking changes or new features
+   - Update CHANGELOG.md with breaking changes or new features
 
 6. **Quality Assurance**
    - Run cookstyle linting
