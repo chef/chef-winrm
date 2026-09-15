@@ -32,4 +32,20 @@ describe WinRM::WSMV::CommandOutputDecoder do
       expect(subject.decode(raw_output_with_bom)).to eq(expected)
     end
   end
+
+  context "a byte order mark" do
+    let(:bom) { "\xEF\xBB\xBF" }
+
+    it "strips a leading BOM" do
+      expect(subject.decode(Base64.strict_encode64("#{bom}hello"))).to eq("hello")
+    end
+
+    it "leaves output without a BOM untouched" do
+      expect(subject.decode(Base64.strict_encode64("hello"))).to eq("hello")
+    end
+
+    it "preserves a U+FEFF that is not at the start of the output" do
+      expect(subject.decode(Base64.strict_encode64("a#{bom}b"))).to eq("a#{bom}b")
+    end
+  end
 end

@@ -25,4 +25,25 @@ describe WinRM::PSRP::UUID do
       )
     end
   end
+  context "uuid without hyphens" do
+    uuid = "08785e96eb1b4a74a7677b56e8f13ea9"
+    it "should return a Windows GUID struct compatible little endian byte array" do
+      bytes = uuid_helper.uuid_to_windows_guid_bytes(uuid)
+      expect(bytes).to eq([150, 94, 120, 8, 27, 235, 116, 74, 167, 103, 123, 86, 232, 241, 62, 169])
+    end
+  end
+  context "uuid wrapped in braces" do
+    uuid = "{08785e96-eb1b-4a74-a767-7b56e8f13ea9}"
+    it "should return a Windows GUID struct compatible little endian byte array" do
+      bytes = uuid_helper.uuid_to_windows_guid_bytes(uuid)
+      expect(bytes).to eq([150, 94, 120, 8, 27, 235, 116, 74, 167, 103, 123, 86, 232, 241, 62, 169])
+    end
+  end
+  context "an all-ones uuid" do
+    uuid = "ffffffff-ffff-ffff-ffff-ffffffffffff"
+    it "should return sixteen 0xff bytes" do
+      bytes = uuid_helper.uuid_to_windows_guid_bytes(uuid)
+      expect(bytes).to eq([255] * 16)
+    end
+  end
 end
