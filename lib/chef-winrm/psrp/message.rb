@@ -94,14 +94,13 @@ module WinRM
       # WinRM message.
       # @return [Array<Byte>] Unencoded raw byte array of the PSRP message.
       def bytes
-        [
-          int16le(destination),
+        int16le(destination).concat(
           int16le(type),
           uuid_to_windows_guid_bytes(runspace_pool_id),
           uuid_to_windows_guid_bytes(pipeline_id),
           byte_order_mark,
-          data_bytes,
-        ].flatten
+          data_bytes
+        )
       end
 
       # Parses the raw data to a MessageData class
