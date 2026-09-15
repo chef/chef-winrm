@@ -37,16 +37,11 @@ Gem::Specification.new do |s|
   s.add_dependency "logging", [">= 1.6.1", "< 3.0"]
   s.add_dependency "nori", "~> 2.7"
   s.add_dependency "rexml", ">= 3.4.2", "< 4.0" # needs to load at least 3.4.2 for several CVE fixes
-  s.add_development_dependency "pry"
-  s.add_development_dependency "rake", ">= 10.3", "< 13"
-  s.add_development_dependency "ostruct"
-  s.add_development_dependency "fiddle"
-  s.add_development_dependency "benchmark"
-  s.add_development_dependency "rb-readline"
-  s.add_development_dependency "syslog"
-  s.add_development_dependency "rspec", "~> 3.2"
-  s.add_development_dependency "cookstyle", "~> 8.1"
   s.add_dependency "rubyntlm", "~> 0.6.0", ">= 0.6.3"
+  # logging requires syslog, which stopped being a default gem in Ruby 3.4.
+  # It rescues the LoadError, but every caller sees the warning unless we
+  # depend on it here. Installs as a no-op stub on Windows.
+  s.add_dependency "syslog"
 
   s.metadata["rubygems_mfa_required"] = "true"
 end
