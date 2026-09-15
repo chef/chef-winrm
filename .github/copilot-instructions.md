@@ -95,9 +95,7 @@ chef-winrm/
 ├── README.md                   # Documentation
 ├── LICENSE                     # Apache 2.0 license
 ├── changelog.md                # Version history
-├── appveyor.yml                # AppVeyor CI configuration
 ├── Vagrantfile                 # Development VM configuration
-├── WinrmAppveyor.psm1          # PowerShell module for CI
 └── preamble                    # License preamble
 ```
 
