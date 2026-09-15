@@ -15,15 +15,18 @@ task :console do
   Pry.start
 end
 
+# The spec_helper require, default path and colour live in .rspec, so a bare
+# `rspec` (or `rspec path/to/one_spec.rb`) behaves the same as `rake spec`.
+# RSpec::Core::RakeTask always passes an explicit --pattern, which overrides
+# the --default-path in .rspec, so the pattern still has to be set here.
 RSpec::Core::RakeTask.new(:spec) do |task|
   task.pattern = "tests/spec/**/*_spec.rb"
-  task.rspec_opts = ["--color", "-r ./tests/spec/spec_helper"]
 end
 
 # Run the integration test suite
 RSpec::Core::RakeTask.new(:integration) do |task|
   task.pattern = "tests/integration/*_spec.rb"
-  task.rspec_opts = ["--color", "-f documentation", "-r ./tests/integration/spec_helper"]
+  task.rspec_opts = ["-f documentation", "-r ./tests/integration/spec_helper"]
 end
 
 desc "Check Linting and code style."

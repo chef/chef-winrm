@@ -1,12 +1,10 @@
 require "chef-winrm/wsmv/receive_response_reader"
 
-describe WinRM::WSMV::ReceiveResponseReader do
+RSpec.describe WinRM::WSMV::ReceiveResponseReader do
   let(:shell_id) { "F4A2622B-B842-4EB8-8A78-0225C8A993DF" }
   let(:command_id) { "A2A2622B-B842-4EB8-8A78-0225C8A993DF" }
   let(:output_message) { double("output_message", build: "output_message") }
-  let(:transport) do
-    {}
-  end
+  let(:transport) { double("transport") }
 
   subject do
     described_class.new(
@@ -15,24 +13,34 @@ describe WinRM::WSMV::ReceiveResponseReader do
     )
   end
 
-  # Output from PowerShell endpoint and output from OMI Server endpoint
-  {
-    "get_command_output_response.xml.erb" => "get_command_output_response_not_done.xml.erb",
-    "get_omi_command_output_response.xml.erb" => "get_omi_command_output_response_not_done.xml.erb",
-  }.each_pair do |template, template_not_done|
+  # Output from the PowerShell endpoint and output from the OMI Server endpoint.
+  # An OMI server does not include a stdout stream once CommandState is Done, so
+  # the stdout expectations below only apply to the PowerShell response.
+  [
+    {
+      template: "get_command_output_response.xml.erb",
+      template_not_done: "get_command_output_response_not_done.xml.erb",
+      includes_stdout: true,
+    },
+    {
+      template: "get_omi_command_output_response.xml.erb",
+      template_not_done: "get_omi_command_output_response_not_done.xml.erb",
+      includes_stdout: false,
+    },
+  ].each do |fixture|
+    template = fixture[:template]
+    template_not_done = fixture[:template_not_done]
     describe "#read_output for #{template}" do
       context "response doc stdout with invalid UTF-8 characters, issue 184" do
         let(:test_data_stdout) { "ffff" } # Base64-decodes to '}\xF7\xDF', an invalid sequence
         let(:test_data_stderr) { "" }
         let(:test_data_xml)    { ERB.new(stubbed_response(template)).result(binding) }
         let(:test_data)        { REXML::Document.new(test_data_xml) }
-        let(:stdout_xpath)     { "//*[local-name() = 'Stream' and @Name = 'stdout']" }
 
         before do
           allow(transport).to receive(:send_request).and_return(test_data)
         end
 
-        # OMI server messages do not appear to include stdout when CommandState/Done
         it "does not raise an ArgumentError: invalid byte sequence in UTF-8" do
 
           expect do
@@ -43,11 +51,12 @@ describe WinRM::WSMV::ReceiveResponseReader do
 
         end
 
-        it "does not have an empty stdout" do
-          skip("response has no stdout") if REXML::XPath.match(test_data, stdout_xpath).empty?
-          expect(
-            subject.read_output(output_message).stdout
-          ).not_to be_empty
+        if fixture[:includes_stdout]
+          it "does not have an empty stdout" do
+            expect(
+              subject.read_output(output_message).stdout
+            ).not_to be_empty
+          end
         end
       end
 
@@ -57,17 +66,17 @@ describe WinRM::WSMV::ReceiveResponseReader do
         let(:test_data_stderr) { "" }
         let(:test_data_xml)    { ERB.new(stubbed_response(template)).result(binding) }
         let(:test_data)        { REXML::Document.new(test_data_xml) }
-        let(:stdout_xpath)     { "//*[local-name() = 'Stream' and @Name = 'stdout']" }
 
         before do
           allow(transport).to receive(:send_request).and_return(test_data)
         end
 
-        it "decodes to match input data" do
-          skip("response has no stdout") if REXML::XPath.match(test_data, stdout_xpath).empty?
-          expect(
-            subject.read_output(output_message).stdout
-          ).to eq(test_data_raw)
+        if fixture[:includes_stdout]
+          it "decodes to match input data" do
+            expect(
+              subject.read_output(output_message).stdout
+            ).to eq(test_data_raw)
+          end
         end
       end
     end

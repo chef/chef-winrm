@@ -1,6 +1,6 @@
 require "chef-winrm/wsmv/configuration"
 
-describe WinRM::WSMV::Configuration do
+RSpec.describe WinRM::WSMV::Configuration do
   subject do
     described_class.new(default_connection_opts)
   end

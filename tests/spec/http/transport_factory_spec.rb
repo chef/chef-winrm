@@ -10,7 +10,7 @@ module WinRM
   end
 end
 
-describe WinRM::HTTP::TransportFactory do
+RSpec.describe WinRM::HTTP::TransportFactory do
   describe "#create_transport" do
     let(:transport) { :negotiate }
     let(:options) do

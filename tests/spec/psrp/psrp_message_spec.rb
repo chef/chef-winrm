@@ -1,6 +1,6 @@
 require "chef-winrm/psrp/message"
 
-describe WinRM::PSRP::Message do
+RSpec.describe WinRM::PSRP::Message do
   context "all fields provided" do
     let(:payload) { "this is my payload" }
     subject do
@@ -54,7 +54,7 @@ describe WinRM::PSRP::Message do
 
   context "no command id" do
     subject(:msg) do
-      payload = <<-HERE.unindent
+      payload = unindent(<<-HERE)
         <Obj RefId="0"><MS><Version N="protocolversion">2.3</Version>
         <Version N="PSVersion">2.0</Version><Version N="SerializationVersion">1.1.0.1</Version></MS>
         </Obj>

@@ -1,7 +1,7 @@
 require "chef-winrm/psrp/message_data/base"
 require "chef-winrm/psrp/message_data/pipeline_output"
 
-describe WinRM::PSRP::MessageData::PipelineOutput do
+RSpec.describe WinRM::PSRP::MessageData::PipelineOutput do
   subject { described_class.new(raw_data) }
 
   context "receiving output with BOM and no new line" do

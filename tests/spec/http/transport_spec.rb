@@ -1,7 +1,7 @@
 require "rubyntlm"
 require "chef-winrm/http/transport"
 
-describe WinRM::HTTP::HttpNegotiate do
+RSpec.describe WinRM::HTTP::HttpNegotiate do
   describe "#init" do
     let(:endpoint) { "some_endpoint" }
     let(:domain) { "some_domain" }

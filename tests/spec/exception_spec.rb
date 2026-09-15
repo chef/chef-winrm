@@ -1,4 +1,4 @@
-describe "Exceptions" do
+RSpec.describe "Exceptions" do
   describe WinRM::WinRMAuthorizationError do
     let(:error) { WinRM::WinRMHTTPTransportError.new("Foo happened", 500) }
 

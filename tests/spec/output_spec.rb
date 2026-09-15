@@ -1,4 +1,4 @@
-describe WinRM::Output do
+RSpec.describe WinRM::Output do
   subject { WinRM::Output.new }
 
   context "when there is no output" do

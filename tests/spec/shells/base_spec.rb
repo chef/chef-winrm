@@ -1,5 +1,13 @@
 require "chef-winrm/shells/base"
 
+# Retryable builds its rescue list from HTTPClient::KeepAliveDisconnected and
+# HTTPClient::ConnectTimeoutError, but httpclient is only loaded when a
+# transport is constructed and these examples drive the retry path with a
+# double. Without this require the rescue clause raises NameError instead of
+# retrying, so the outcome depended on whether a transport spec happened to
+# run first.
+require "httpclient"
+
 # Dummy shell class
 class DummyShell < WinRM::Shells::Base
   class << self
@@ -30,7 +38,7 @@ class DummyShell < WinRM::Shells::Base
   end
 end
 
-describe DummyShell do
+RSpec.describe DummyShell do
   let(:retry_limit) { 1 }
   let(:shell_id) { "shell_id" }
   let(:output) { "output" }

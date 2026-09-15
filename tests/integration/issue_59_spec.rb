@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-describe "issue 59" do
+RSpec.describe "issue 59" do
   describe "long running script without output" do
     let(:logged_output) { StringIO.new }
     let(:logger)        { Logging.logger(logged_output) }

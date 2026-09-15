@@ -1,6 +1,6 @@
 require "chef-winrm"
 
-describe "requiring chef-winrm" do
+RSpec.describe "requiring chef-winrm" do
   # Guards the deferred require in WinRM::HTTP::HttpTransport#initialize. The
   # check runs in a subprocess because this one has already loaded httpclient
   # by way of the transport specs.
