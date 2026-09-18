@@ -2,7 +2,7 @@ require "stringio"
 require "chef-winrm"
 require "chef-winrm/compat_logger"
 
-describe WinRM::CompatLogger do
+RSpec.describe WinRM::CompatLogger do
   let(:io) { StringIO.new }
   let(:logger) { WinRM::CompatLogger.new(io) }
 
@@ -28,7 +28,7 @@ describe WinRM::CompatLogger do
   end
 end
 
-describe "WinRM.default_log_level" do
+RSpec.describe "WinRM.default_log_level" do
   around do |example|
     original = ENV.fetch("WINRM_LOG", nil)
     example.run
