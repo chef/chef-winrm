@@ -234,17 +234,27 @@ RSpec.describe DummyShell do
   end
 end
 
-describe WinRM::Shells::Base do
+# Base.finalize calls close_shell, which Base itself leaves to its subclasses.
+# DummyShell overrides finalize outright, so it cannot exercise the real
+# implementation; this subclass inherits it and supplies only close_shell.
+class FinalizerShell < WinRM::Shells::Base
+  class << self
+    def close_shell(_connection_opts, _transport, _shell_id); end
+  end
+end
+
+RSpec.describe WinRM::Shells::Base do
   describe ".finalize" do
+    let(:shell_class) { FinalizerShell }
     let(:connection_opts) { { max_commands: 100 } }
     let(:transport) { double("transport") }
     let(:shell_id) { "shell_id" }
-    let(:finalizer) { described_class.finalize(connection_opts, transport, shell_id) }
+    let(:finalizer) { shell_class.finalize(connection_opts, transport, shell_id) }
 
     it "closes the shell in a separate thread" do
       thread = double("thread")
       expect(Thread).to receive(:new) do |&block|
-        expect(described_class).to receive(:close_shell).with(connection_opts, transport, shell_id)
+        expect(shell_class).to receive(:close_shell).with(connection_opts, transport, shell_id)
         block.call
         thread
       end
@@ -258,24 +268,24 @@ describe WinRM::Shells::Base do
       end
 
       it "defers closing the shell to at_exit instead of raising" do
-        expect(described_class).to receive(:at_exit)
+        expect(shell_class).to receive(:at_exit)
 
         expect { finalizer.call }.not_to raise_error
       end
 
       it "closes the shell when the deferred block runs" do
-        allow(described_class).to receive(:at_exit) { |&block| block.call }
+        allow(shell_class).to receive(:at_exit) { |&block| block.call }
 
-        expect(described_class).to receive(:close_shell).with(connection_opts, transport, shell_id)
+        expect(shell_class).to receive(:close_shell).with(connection_opts, transport, shell_id)
 
         finalizer.call
       end
 
       it "warns rather than raising when the deferred close fails" do
-        allow(described_class).to receive(:at_exit) { |&block| block.call }
-        allow(described_class).to receive(:close_shell).and_raise(StandardError, "boom")
+        allow(shell_class).to receive(:at_exit) { |&block| block.call }
+        allow(shell_class).to receive(:close_shell).and_raise(StandardError, "boom")
 
-        expect(described_class).to receive(:warn).with(/Deferred shell cleanup failed.*boom/)
+        expect(shell_class).to receive(:warn).with(/Deferred shell cleanup failed.*boom/)
 
         expect { finalizer.call }.not_to raise_error
       end

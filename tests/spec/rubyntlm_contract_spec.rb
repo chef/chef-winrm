@@ -9,7 +9,7 @@ require "net/ntlm"
 # Nothing in the unit suite exercised that path, so the breakage only
 # surfaced in the integration suite, which needs a live Windows host. These
 # examples pin the dependency contract instead, failing in seconds.
-describe "rubyntlm session key derivation" do
+RSpec.describe "rubyntlm session key derivation" do
   let(:session) do
     Net::NTLM::Client::Session.allocate.tap do |s|
       allow(s).to receive(:exported_session_key).and_return("0123456789abcdef")
