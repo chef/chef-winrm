@@ -94,12 +94,25 @@ module WinRM
         @shell_id = nil
       end
 
+      # Ruby 3.1+ forbids allocating a thread inside a finalizer, which is
+      # where this proc runs. Attempt the thread anyway so ordinary execution
+      # behaves as it always has, and when the interpreter refuses, defer the
+      # close to at_exit. That still reaps the shell, rather than leaking it
+      # until the WinRM server's idle timeout expires.
       def self.finalize(connection_opts, transport, shell_id)
-        # Don't attempt to close shell during finalization as it requires
-        # HTTP operations which need threads. Ruby 3.3+ doesn't allow thread
-        # creation during finalization. The WinRM server will clean up
-        # orphaned shells after the timeout period.
-        proc {}
+        proc do
+          Thread.new { close_shell(connection_opts, transport, shell_id) }
+        rescue ThreadError => e
+          # Only swallow the specific Ruby 3.1+ restriction; anything else is
+          # a real problem and should surface.
+          raise unless e.message.include?("can't alloc thread")
+
+          at_exit do
+            close_shell(connection_opts, transport, shell_id)
+          rescue StandardError => cleanup_error
+            warn "[WinRM] Deferred shell cleanup failed: #{cleanup_error.class}: #{cleanup_error.message}"
+          end
+        end
       end
 
       protected

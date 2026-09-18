@@ -9,7 +9,7 @@ RSpec.describe WinRM::WSMV::ReceiveResponseReader do
   subject do
     described_class.new(
       transport,
-      Logging.logger["test"]
+      Logger.new(IO::NULL)
     )
   end
 

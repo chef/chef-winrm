@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require_relative "compat_logger"
 require_relative "connection_opts"
 require_relative "http/transport_factory"
 require_relative "shells/shell_factory"
@@ -65,9 +66,7 @@ module WinRM
     end
 
     def configure_logger
-      @logger = Logging.logger[self]
-      logger.level = :warn
-      logger.add_appenders(Logging.appenders.stdout)
+      @logger = WinRM::CompatLogger.new($stdout, progname: "WinRM", level: WinRM.default_log_level)
     end
 
     def shell_factory
@@ -77,7 +76,7 @@ module WinRM
     def transport
       @transport ||= begin
         transport_factory = WinRM::HTTP::TransportFactory.new
-        transport_factory.create_transport(@connection_opts)
+        transport_factory.create_transport(@connection_opts.merge(logger: logger))
       end
     end
   end

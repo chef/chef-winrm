@@ -34,10 +34,15 @@ Gem::Specification.new do |s|
   s.add_dependency "erubi", "~> 1.8"
   s.add_dependency "gssapi", "~> 1.2"
   s.add_dependency "httpclient", "~> 2.2", ">= 2.2.0.2"
-  s.add_dependency "logging", [">= 1.6.1", "< 3.0"]
+  s.add_dependency "logger", "~> 1.6"
   s.add_dependency "nori", "~> 2.7"
   s.add_dependency "rexml", ">= 3.4.2", "< 4.0" # needs to load at least 3.4.2 for several CVE fixes
-  s.add_dependency "rubyntlm", "~> 0.6.0", ">= 0.6.3"
+  # rubyntlm 0.6.7 moved the session key derivation methods into
+  # Net::NTLM::Client::SessionCrypto but left the key constants behind in
+  # Net::NTLM::Client::Session. Ruby resolves constants through the lexical
+  # scope of the including module, not the including class, so every seal and
+  # sign key raises NameError and all NTLM and Negotiate connections fail.
+  s.add_dependency "rubyntlm", "~> 0.6.0", ">= 0.6.3", "!= 0.6.7"
   # logging requires syslog, which stopped being a default gem in Ruby 3.4.
   # It rescues the LoadError, but every caller sees the warning unless we
   # depend on it here. Installs as a no-op stub on Windows.

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require "logger" unless defined?(Logger)
 require_relative "response_handler"
 
 module WinRM
@@ -32,7 +33,8 @@ module WinRM
 
         @endpoint = endpoint.is_a?(String) ? URI.parse(endpoint) : endpoint
         @httpcli = HTTPClient.new
-        @logger = Logging.logger[self]
+        @logger = options[:logger] ||
+          Logger.new($stdout, progname: "WinRM", level: WinRM.default_log_level)
         @httpcli.receive_timeout = options[:receive_timeout]
         @httpcli.default_header = { 'User-Agent': options[:user_agent] }
       end

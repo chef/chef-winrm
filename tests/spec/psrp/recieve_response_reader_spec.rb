@@ -33,7 +33,7 @@ RSpec.describe WinRM::PSRP::ReceiveResponseReader do
   subject do
     described_class.new(
       transport,
-      Logging.logger["test"]
+      Logger.new(IO::NULL)
     )
   end
 

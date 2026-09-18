@@ -60,7 +60,7 @@ RSpec.describe DummyShell do
     allow(transport).to receive(:send_request)
   end
 
-  subject { described_class.new(connection_options, transport, Logging.logger["test"]) }
+  subject { described_class.new(connection_options, transport, Logger.new(IO::NULL)) }
 
   shared_examples "retry shell command" do
     it "only closes the shell if there are too many" do
@@ -230,6 +230,61 @@ RSpec.describe DummyShell do
           .and_raise(WinRM::WinRMWSManFault.new("oops", "2150858843"))
         expect { subject.close }.not_to raise_error
       end
+    end
+  end
+end
+
+describe WinRM::Shells::Base do
+  describe ".finalize" do
+    let(:connection_opts) { { max_commands: 100 } }
+    let(:transport) { double("transport") }
+    let(:shell_id) { "shell_id" }
+    let(:finalizer) { described_class.finalize(connection_opts, transport, shell_id) }
+
+    it "closes the shell in a separate thread" do
+      thread = double("thread")
+      expect(Thread).to receive(:new) do |&block|
+        expect(described_class).to receive(:close_shell).with(connection_opts, transport, shell_id)
+        block.call
+        thread
+      end
+
+      finalizer.call
+    end
+
+    context "when Ruby forbids allocating a thread during finalization" do
+      before do
+        allow(Thread).to receive(:new).and_raise(ThreadError, "can't alloc thread")
+      end
+
+      it "defers closing the shell to at_exit instead of raising" do
+        expect(described_class).to receive(:at_exit)
+
+        expect { finalizer.call }.not_to raise_error
+      end
+
+      it "closes the shell when the deferred block runs" do
+        allow(described_class).to receive(:at_exit) { |&block| block.call }
+
+        expect(described_class).to receive(:close_shell).with(connection_opts, transport, shell_id)
+
+        finalizer.call
+      end
+
+      it "warns rather than raising when the deferred close fails" do
+        allow(described_class).to receive(:at_exit) { |&block| block.call }
+        allow(described_class).to receive(:close_shell).and_raise(StandardError, "boom")
+
+        expect(described_class).to receive(:warn).with(/Deferred shell cleanup failed.*boom/)
+
+        expect { finalizer.call }.not_to raise_error
+      end
+    end
+
+    it "re-raises thread errors it does not recognize" do
+      allow(Thread).to receive(:new).and_raise(ThreadError, "something else entirely")
+
+      expect { finalizer.call }.to raise_error(ThreadError, /something else entirely/)
     end
   end
 end
